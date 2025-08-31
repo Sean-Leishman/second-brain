@@ -1,0 +1,21 @@
+{
+  "calendarSources": [
+    {
+      "type": "local",
+      "color": "hsl( 201, 100%, calc(50% - 5%) )",
+      "directory": "/"
+    },
+    {
+      "type": "local",
+      "color": "hsl( 201, 100%, calc(50% - 5%) )",
+      "directory": "University/Year 4/Semester 1/Events"
+    }
+  ],
+  "defaultCalendar": 0,
+  "firstDay": 0,
+  "initialView": {
+    "desktop": "timeGridWeek",
+    "mobile": "timeGrid3Days"
+  },
+  "timeFormat24h": false
+}
