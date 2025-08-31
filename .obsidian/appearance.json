@@ -1,0 +1,12 @@
+{
+  "accentColor": "#171717",
+  "cssTheme": "AnuPpuccin",
+  "theme": "moonstone",
+  "baseFontSize": 18,
+  "textFontFamily": "Merriweather 18pt,Garamond,Merriweather Sans,Gill Sans MT,JetBrains Mono NL,Berlin Sans FB",
+  "enabledCssSnippets": [
+    "snippet"
+  ],
+  "interfaceFontFamily": "JetBrains Mono NL",
+  "showRibbon": true
+}

@@ -1,0 +1,13 @@
+{
+  "explain": [
+    {
+      "filestore": {
+        "io": {
+          "net_bytes": 0,
+          "net_bytes_arrow": 0
+        },
+        "a": 0
+      }
+    }
+  ]
+}
