@@ -1,16 +1,8 @@
-### Zotero Integration
-
-**Purpose**: Manage academic papers, PDFs, and research citations
-
-**Workflow**:
-- Academic papers and PDFs managed through Zotero
-- Zotero notes imported into `02 Sources/` using specialized templates
-- Automatic citation formatting and metadata extraction
-- Links maintained between Obsidian notes and Zotero library# Nordorn - Obsidian Second Brain
+# Nordorn
 
 A comprehensive personal knowledge management system built in Obsidian, combining Zettelkasten methodology with project management. Uses Templator, Web Clipper, and Zotero integration for automated note creation and academic research management.
 
-# Table of Contents
+## Table of Contents
 
 - [System Overview](#system-overview)
 - [Folder Structure](#folder-structure)
