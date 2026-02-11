@@ -1,21 +1,14 @@
 <%*
-let title = await tp.system.prompt("Enter title")
+let title = await tp.system.prompt("Enter project name")
 await tp.file.rename(title)
 let time = tp.date.now("YYYY-MM-DD:HH-mm")
 -%>
 ---
 title: <% title %>
 created: <% time %>
-tags: book
 links:
-status: Inbox
-year:
-author:
-started:
-finished:
-series:
-series_part:
-genres:
+tags: project
+status: Active
 cssclasses:
   - center-images
   - status-tag
@@ -23,15 +16,22 @@ cssclasses:
 ---
 > [!note]+ **Properties**
 > **Created:** <% time %>
-> **Status:** #Inbox
+> **Origin:**
+> **Status:** #Working
 > **Tags:**
-> **Author:**
-> **Year:**
 ---
-# Annotation
+## Overview
 
-# Characters
+## Goals
+- [ ] Goal 1
+- [ ] Goal 2
 
-# Quotes
+## Tasks
+- [ ] Task 1
+- [ ] Task 2
 
-# Notes
+## Notes
+
+## Log
+### <% time %>
+- Started project
