@@ -1,12 +1,14 @@
 {
-  "accentColor": "#171717",
-  "cssTheme": "AnuPpuccin",
-  "theme": "moonstone",
-  "baseFontSize": 18,
-  "textFontFamily": "Merriweather 18pt,Garamond,Merriweather Sans,Gill Sans MT,JetBrains Mono NL,Berlin Sans FB",
+  "accentColor": "#a37acc",
+  "cssTheme": "",
+  "theme": "obsidian",
+  "baseFontSize": 16,
+  "textFontFamily": "Fira Code, JetBrains Mono, monospace",
+  "monospaceFontFamily": "Fira Code, JetBrains Mono, monospace",
   "enabledCssSnippets": [
-    "snippet"
+    "snippet",
+    "embark"
   ],
-  "interfaceFontFamily": "JetBrains Mono NL",
+  "interfaceFontFamily": "Fira Code, JetBrains Mono, monospace",
   "showRibbon": true
 }
