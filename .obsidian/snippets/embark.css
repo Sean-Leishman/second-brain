@@ -1,0 +1,482 @@
+/*------------------------------------------------------------------------------
+                        Embark Theme for Obsidian
+                   Based on embark-theme/vim color scheme
+
+  Colors from Embark:
+  - Background: #1e1c31 (space1)
+  - Darker BG:  #100e23 (space0)
+  - Lighter BG: #2d2b40 (space2)
+  - Selection:  #585273 (space4)
+  - Foreground: #cbe3e7 (white)
+  - Muted:      #8a889d (astral)
+  - Red:        #f02e6e
+  - Pink:       #f48fb1
+  - Green:      #62d196
+  - Yellow:     #ffe6b3
+  - Orange:     #ffb378
+  - Blue:       #65b2ff
+  - Cyan:       #63f2f1
+  - Purple:     #a37acc
+  - Light Purple: #d4bfff
+------------------------------------------------------------------------------*/
+
+.theme-dark {
+  /* Background Colors - more saturated purple */
+  --background-primary: #1f1a2e;
+  --background-primary-alt: #150f24;
+  --background-secondary: #2a2440;
+  --background-secondary-alt: #231d38;
+  --background-modifier-border: #3d3560;
+  --background-modifier-form-field: #150f24;
+  --background-modifier-form-field-highlighted: #2a2440;
+  --background-modifier-box-shadow: rgba(21, 15, 36, 0.5);
+  --background-modifier-success: #62d196;
+  --background-modifier-error: #f02e6e;
+  --background-modifier-error-rgb: 240, 46, 110;
+  --background-modifier-error-hover: #f48fb1;
+  --background-modifier-cover: rgba(16, 14, 35, 0.8);
+
+  /* Text Colors */
+  --text-normal: #cbe3e7;
+  --text-muted: #8a889d;
+  --text-faint: #584f7a;
+  --text-on-accent: #150f24;
+  --text-error: #f02e6e;
+  --text-error-hover: #f48fb1;
+  --text-highlight-bg: rgba(163, 122, 204, 0.4);
+  --text-highlight-bg-active: rgba(163, 122, 204, 0.6);
+  --text-selection: rgba(88, 79, 122, 0.99);
+  --text-accent: #a37acc;
+  --text-accent-hover: #d4bfff;
+
+  /* Interactive Elements */
+  --interactive-normal: #2a2440;
+  --interactive-hover: #3d3560;
+  --interactive-accent: #a37acc;
+  --interactive-accent-rgb: 163, 122, 204;
+  --interactive-accent-hover: #d4bfff;
+  --interactive-success: #62d196;
+
+  /* Scrollbar */
+  --scrollbar-active-thumb-bg: rgba(163, 122, 204, 0.5);
+  --scrollbar-bg: rgba(30, 28, 49, 0.05);
+  --scrollbar-thumb-bg: rgba(88, 79, 122, 0.5);
+
+  /* Links */
+  --link-color: #65b2ff;
+  --link-color-hover: #91ddff;
+  --link-external-color: #63f2f1;
+  --link-external-color-hover: #7ff5f5;
+  --link-unresolved-color: #f48fb1;
+  --link-unresolved-opacity: 0.8;
+  --link-unresolved-filter: none;
+  --link-unresolved-decoration-style: dashed;
+  --link-unresolved-decoration-color: #f48fb1;
+
+  /* Tags */
+  --tag-color: #ffe6b3;
+  --tag-color-hover: #fff;
+  --tag-background: rgba(255, 230, 179, 0.15);
+  --tag-background-hover: rgba(255, 230, 179, 0.25);
+
+  /* Headings */
+  --h1-color: #f48fb1;
+  --h2-color: #d4bfff;
+  --h3-color: #65b2ff;
+  --h4-color: #63f2f1;
+  --h5-color: #62d196;
+  --h6-color: #ffe6b3;
+
+  /* Code */
+  --code-normal: #cbe3e7;
+  --code-comment: #8a889d;
+  --code-function: #65b2ff;
+  --code-important: #f02e6e;
+  --code-keyword: #a37acc;
+  --code-operator: #63f2f1;
+  --code-property: #d4bfff;
+  --code-punctuation: #8a889d;
+  --code-string: #62d196;
+  --code-tag: #f48fb1;
+  --code-value: #ffb378;
+  --code-background: #150f24;
+
+  /* Indentation Guides */
+  --indentation-guide-color: rgba(88, 79, 122, 0.5);
+  --indentation-guide-color-active: rgba(163, 122, 204, 0.6);
+
+  /* Blockquotes */
+  --blockquote-border-color: #a37acc;
+
+  /* Horizontal Rules */
+  --hr-color: #3d3560;
+
+  /* Lists */
+  --list-marker-color: #a37acc;
+  --list-marker-color-hover: #d4bfff;
+  --list-marker-color-collapsed: #f48fb1;
+
+  /* Checkboxes */
+  --checkbox-color: #a37acc;
+  --checkbox-color-hover: #d4bfff;
+  --checkbox-border-color: #584f7a;
+  --checkbox-border-color-hover: #a37acc;
+  --checkbox-marker-color: #100e23;
+  --checklist-done-color: #8a889d;
+  --checklist-done-decoration: line-through;
+
+  /* Tables */
+  --table-header-background: #2a2440;
+  --table-header-background-hover: #3d3560;
+  --table-header-color: #cbe3e7;
+  --table-header-weight: 600;
+  --table-row-even-background: rgba(42, 36, 64, 0.5);
+  --table-row-odd-background: rgba(31, 26, 46, 0.5);
+  --table-row-background-hover: #3d3560;
+
+  /* Graph View */
+  --graph-line: #584f7a;
+  --graph-node: #a37acc;
+  --graph-node-unresolved: #f48fb1;
+  --graph-node-focused: #d4bfff;
+  --graph-node-tag: #ffe6b3;
+  --graph-node-attachment: #62d196;
+
+  /* Search */
+  --search-match-color: #ffe6b3;
+  --search-result-background: rgba(163, 122, 204, 0.2);
+
+  /* Accent Color */
+  --accent-h: 270;
+  --accent-s: 50%;
+  --accent-l: 64%;
+
+  /* Canvas */
+  --canvas-color: #a37acc;
+  --canvas-dot-pattern: #3d3560;
+
+  /* Callouts */
+  --callout-default: #a37acc;
+  --callout-info: #65b2ff;
+  --callout-todo: #63f2f1;
+  --callout-important: #f02e6e;
+  --callout-tip: #62d196;
+  --callout-success: #62d196;
+  --callout-question: #ffb378;
+  --callout-warning: #ffe6b3;
+  --callout-failure: #f02e6e;
+  --callout-danger: #f02e6e;
+  --callout-bug: #f48fb1;
+  --callout-example: #d4bfff;
+  --callout-quote: #8a889d;
+
+  /* Modals & Popups */
+  --modal-background: #1f1a2e;
+  --modal-border-color: #3d3560;
+
+  /* Prompts & Suggestions */
+  --prompt-border-color: #3d3560;
+
+  /* Titlebar */
+  --titlebar-background: #150f24;
+  --titlebar-background-focused: #1f1a2e;
+  --titlebar-text-color: #cbe3e7;
+  --titlebar-text-color-focused: #cbe3e7;
+
+  /* Status Bar */
+  --status-bar-background: #150f24;
+  --status-bar-text-color: #8a889d;
+
+  /* File Navigation */
+  --nav-item-color: #cbe3e7;
+  --nav-item-color-hover: #d4bfff;
+  --nav-item-color-active: #a37acc;
+  --nav-item-background-hover: rgba(61, 53, 96, 0.5);
+  --nav-item-background-active: rgba(163, 122, 204, 0.2);
+  --nav-collapse-icon-color: #584f7a;
+
+  /* Tab */
+  --tab-text-color: #8a889d;
+  --tab-text-color-active: #cbe3e7;
+  --tab-text-color-focused: #cbe3e7;
+  --tab-text-color-focused-active: #cbe3e7;
+  --tab-background-active: #1f1a2e;
+  --tab-outline-color: #3d3560;
+
+  /* Ribbon */
+  --ribbon-background: #150f24;
+  --ribbon-background-collapsed: #150f24;
+
+  /* Cursor */
+  --cursor: #a37acc;
+  --cursor-line-background: rgba(42, 36, 64, 0.5);
+}
+
+/* Heading styles */
+.theme-dark h1,
+.theme-dark .HyperMD-header-1,
+.theme-dark .cm-header-1 {
+  color: var(--h1-color);
+  font-weight: 700;
+}
+
+.theme-dark h2,
+.theme-dark .HyperMD-header-2,
+.theme-dark .cm-header-2 {
+  color: var(--h2-color);
+  font-weight: 600;
+}
+
+.theme-dark h3,
+.theme-dark .HyperMD-header-3,
+.theme-dark .cm-header-3 {
+  color: var(--h3-color);
+  font-weight: 600;
+}
+
+.theme-dark h4,
+.theme-dark .HyperMD-header-4,
+.theme-dark .cm-header-4 {
+  color: var(--h4-color);
+}
+
+.theme-dark h5,
+.theme-dark .HyperMD-header-5,
+.theme-dark .cm-header-5 {
+  color: var(--h5-color);
+}
+
+.theme-dark h6,
+.theme-dark .HyperMD-header-6,
+.theme-dark .cm-header-6 {
+  color: var(--h6-color);
+}
+
+/* Bold and italic */
+.theme-dark strong,
+.theme-dark .cm-strong {
+  color: #f48fb1;
+}
+
+.theme-dark em,
+.theme-dark .cm-em {
+  color: #d4bfff;
+}
+
+/* Inline code */
+.theme-dark code:not(pre code),
+.theme-dark .cm-inline-code {
+  background-color: #150f24;
+  color: #63f2f1;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+/* Code blocks */
+.theme-dark pre,
+.theme-dark .HyperMD-codeblock {
+  background-color: #150f24 !important;
+}
+
+/* Selection */
+.theme-dark ::selection {
+  background-color: rgba(163, 122, 204, 0.4);
+}
+
+/* Blockquote styling */
+.theme-dark blockquote,
+.theme-dark .HyperMD-quote {
+  border-left: 3px solid #a37acc;
+  background-color: rgba(163, 122, 204, 0.1);
+}
+
+/* Active line highlight */
+.theme-dark .cm-active {
+  background-color: rgba(42, 36, 64, 0.5) !important;
+}
+
+/* Matching brackets */
+.theme-dark .cm-matchingBracket {
+  color: #63f2f1 !important;
+  background-color: rgba(99, 242, 241, 0.2);
+}
+
+/* Markdown formatting tokens */
+.theme-dark .cm-formatting {
+  color: #584f7a;
+}
+
+/* List bullets */
+.theme-dark .list-bullet {
+  color: #a37acc;
+}
+
+/* Horizontal rule */
+.theme-dark hr {
+  border-color: #3d3560;
+}
+
+/* Frontmatter */
+.theme-dark .cm-hmd-frontmatter {
+  color: #8a889d;
+}
+
+/* Tags in editor */
+.theme-dark .cm-hashtag {
+  color: #ffe6b3;
+  background-color: rgba(255, 230, 179, 0.15);
+}
+
+/* Embed styling */
+.theme-dark .internal-embed {
+  border-left: 3px solid #a37acc;
+  padding-left: 12px;
+  background-color: rgba(42, 36, 64, 0.3);
+}
+
+/* Scrollbar styling */
+.theme-dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.theme-dark ::-webkit-scrollbar-track {
+  background: #150f24;
+}
+
+.theme-dark ::-webkit-scrollbar-thumb {
+  background: #3d3560;
+  border-radius: 4px;
+}
+
+.theme-dark ::-webkit-scrollbar-thumb:hover {
+  background: #524a75;
+}
+
+/* File tree hover effects */
+.theme-dark .nav-file-title:hover,
+.theme-dark .nav-folder-title:hover {
+  background-color: rgba(61, 53, 96, 0.5);
+}
+
+/* Active file */
+.theme-dark .nav-file-title.is-active {
+  background-color: rgba(163, 122, 204, 0.2);
+  color: #d4bfff;
+}
+
+/* Settings and modal styling */
+.theme-dark .modal-container .modal {
+  background-color: #1f1a2e;
+  border: 1px solid #3d3560;
+}
+
+.theme-dark .setting-item-control button {
+  background-color: #2a2440;
+  color: #cbe3e7;
+}
+
+.theme-dark .setting-item-control button:hover {
+  background-color: #3d3560;
+}
+
+/* Tooltip */
+.theme-dark .tooltip {
+  background-color: #2a2440;
+  color: #cbe3e7;
+}
+
+/* Command palette */
+.theme-dark .suggestion-item.is-selected {
+  background-color: rgba(163, 122, 204, 0.3);
+}
+
+/* Focus styling */
+.theme-dark input:focus,
+.theme-dark textarea:focus {
+  border-color: #a37acc;
+  box-shadow: 0 0 0 2px rgba(163, 122, 204, 0.2);
+}
+
+/* Vim cursor (if using vim mode) */
+.theme-dark .cm-fat-cursor {
+  background-color: #a37acc !important;
+}
+
+.theme-dark .cm-cursor {
+  border-left-color: #a37acc !important;
+}
+
+/* ============================================================================
+   SPACING - Images and Code Blocks
+   ============================================================================ */
+
+/* Image spacing in reading view */
+.theme-dark .markdown-preview-view img,
+.theme-dark .markdown-rendered img {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+/* Image spacing in editing view */
+.theme-dark .cm-content .image-embed,
+.theme-dark .markdown-source-view .image-embed {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+/* Code block spacing in reading view */
+.theme-dark .markdown-preview-view pre,
+.theme-dark .markdown-rendered pre {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  padding: 1em;
+  border-radius: 8px;
+}
+
+/* Code block spacing in editing view */
+.theme-dark .HyperMD-codeblock-begin {
+  margin-top: 1.5em;
+  padding-top: 0.75em;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.theme-dark .HyperMD-codeblock-end {
+  margin-bottom: 1.5em;
+  padding-bottom: 0.75em;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.theme-dark .HyperMD-codeblock {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+/* Blockquote spacing */
+.theme-dark blockquote,
+.theme-dark .HyperMD-quote {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+  padding: 0.75em 1em;
+}
+
+/* Table spacing */
+.theme-dark table {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+/* Callout spacing */
+.theme-dark .callout {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+/* Embed spacing */
+.theme-dark .internal-embed {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+  padding: 0.75em 1em;
+}
