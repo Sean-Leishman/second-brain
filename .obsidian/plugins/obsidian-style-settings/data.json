@@ -82,9 +82,8 @@
   "anuppuccin-theme-settings@@anp-card-layout-filebrowser": true,
   "anuppuccin-theme-settings@@anp-border-radius": 16,
   "anuppuccin-theme-settings@@anp-border-padding": 20,
-  "anuppuccin-theme-settings@@anp-editor-font-lp": "\"Merriweather 18PT\"",
-  "anuppuccin-theme-settings@@anp-font-preview-wt": "300",
-  "anuppuccin-theme-settings@@anp-font-editor-wt": "300",
+  "anuppuccin-theme-settings@@anp-font-preview-wt": "400",
+  "anuppuccin-theme-settings@@anp-font-editor-wt": "400",
   "anuppuccin-theme-settings@@h1-font": "\"Merriweather Sans\"",
   "anuppuccin-theme-settings@@h2-font": "\"Merriweather Sans\"",
   "anuppuccin-theme-settings@@h3-font": "\"Merriweather Sans\"",
@@ -99,6 +98,7 @@
   "anuppuccin-theme-settings@@anp-simple-rainbow-collapse-icon-toggle": true,
   "anuppuccin-theme-settings@@anp-simple-rainbow-icon-toggle": true,
   "anuppuccin-theme-settings@@anp-rainbow-subfolder-color-toggle": false,
-  "anuppuccin-theme-settings@@anp-editor-font-rv": "\"Merriweather 18PT\"",
-  "anuppuccin-theme-settings@@bold-weight": "800"
+  "anuppuccin-theme-settings@@anp-editor-font-rv": "\"Merriweather 24PT\"",
+  "anuppuccin-theme-settings@@bold-weight": "800",
+  "anuppuccin-theme-settings@@anp-editor-font-lp": "\"Merriweather 24PT\""
 }
