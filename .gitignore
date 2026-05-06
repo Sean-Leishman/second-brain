@@ -4,6 +4,10 @@
 02 Sources/**/*[.png|.jpg|.jpeg|.md]
 03 Tags/**.md
 04 Indexes/**.md
+!04 Indexes/Wiki Index.md
+!04 Indexes/Wiki Map.md
+!04 Indexes/Wiki Log.md
+!04 Indexes/Open Questions.md
 05 Base Notes/**.md
 06 Daily Notes/**.md
 07 Projects/**/*[.png|.jpg|.jpeg|.md]

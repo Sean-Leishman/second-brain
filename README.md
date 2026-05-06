@@ -1,6 +1,44 @@
-# Nordorn
+# LLM Wiki — Obsidian Template Vault
 
-A comprehensive personal knowledge management system built in Obsidian, combining Zettelkasten methodology with project management. Uses Templator, Web Clipper, and Zotero integration for automated note creation and academic research management.
+A template Obsidian vault implementing [Karpathy's LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) on top of a Zettelkasten + PARA foundation. The LLM is treated as the wiki maintainer (bookkeeping, cross-references, distillation, contradiction flagging); the human owns sourcing, judgment, and authored synthesis.
+
+> **Use this template** to bootstrap a new vault. Fork it, replace example content, edit `CLAUDE.md` to fit your domain.
+
+## What's in this template
+
+- **`CLAUDE.md`** — schema doc that defines how an LLM agent operates inside this vault. Roles, three layers (raw / wiki / schema), operations (Ingest, Collate, Draft, Query, Lint, Reindex, Digest), conventions (provenance, confidence, frontmatter).
+- **`.claude/commands/`** — 7 slash commands (`/ingest`, `/collate`, `/draft`, `/query`, `/lint`, `/reindex`, `/digest`) wired to the operations defined in `CLAUDE.md`. Use with [Claude Code](https://claude.com/claude-code) or any compatible agent harness.
+- **`99 Templates/`** — Obsidian Templater files for Base, Paper, Books, Movies, Daily, Project, Digest, and Zotero.
+- **`04 Indexes/`** — seeded with `Wiki Index.md`, `Wiki Map.md`, `Wiki Log.md`, and `Open Questions.md` — the navigation surface the agent maintains.
+- **`08 Trackers/`** — empty skeletons for Inbox, This Week, Deadlines, Recurring, Someday, Goals, and consumption lists (To Be Read/Watched/Listened/Eaten).
+- **`00 Vault Guide.md`** — long-form workflow guide (Zettelkasten pipeline, task management, capture flows, paper reading, daily notes).
+
+## Quick start
+
+1. Click **Use this template** on GitHub to create your own copy.
+2. Clone locally and open the folder as an Obsidian vault.
+3. Install Templater (point template folder at `99 Templates/`).
+4. Open the vault in Claude Code (or your preferred agent harness): `cd <vault> && claude`.
+5. Try `/lint` to confirm the agent picks up `CLAUDE.md`.
+6. Edit `CLAUDE.md` to taste. The schema is meant to co-evolve.
+
+## How the LLM-Wiki layer maps onto the Zettelkasten foundation
+
+| Layer (Karpathy gist) | Folder(s) | Who writes |
+|---|---|---|
+| **Raw** (immutable to agent) | `01 Fleeting Notes/`, `02 Sources/`, `06 Daily Notes/` | User / capture pipeline |
+| **Wiki** (agent-maintained) | `05 Base Notes/`, `04 Indexes/` | Agent drafts; user reviews |
+| **Schema** | `CLAUDE.md` | Co-evolved |
+
+`07 Projects/` is operationally separate but bridged into the wiki via the **Reindex** op (concepts repeated across projects get promoted to Base Notes). `08 Trackers/` is user-owned operationally.
+
+---
+
+## Underlying Zettelkasten + PARA system
+
+The rest of this README documents the underlying capture and processing system this template is built on. Originally developed as a personal vault ("Nordorn"); the LLM-wiki layer above sits on top.
+
+A comprehensive personal knowledge management system built in Obsidian, combining Zettelkasten methodology with project management. Uses Templater, Web Clipper, and Zotero integration for automated note creation and academic research management.
 
 ## Table of Contents
 
