@@ -414,7 +414,7 @@ Process captured items:
 
 ## Telegram Bot Routing
 
-An external Telegram bot (or equivalent capture tool) handles incoming messages and routes them to the correct vault location. The example routing below is the convention this template assumes.
+`~/personal/obsidian_helper` handles Telegram messages and routes to the correct vault location.
 
 ### Command Table
 

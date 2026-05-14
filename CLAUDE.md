@@ -181,6 +181,22 @@ Projects in `07 Projects/` are operationally siloed (project tasks, meeting note
 
 The point: prevent project work from being a leak. If you learn something while doing cloaksdb, it should compound into the wiki, not stay trapped in the project folder.
 
+### Project session mechanics
+
+Each project in `07 Projects/<name>/` carries three agent-maintained files so sessions aren't amnesiac:
+
+- **`Notes.md`** — living overview: current state, architecture, load-bearing decisions. Shared ownership — agent proposes diffs, user owns it. Load-bearing decisions get a `## Decisions` section (ADR-lite: *Context → Decision → Why → Status*); superseded decisions are marked `superseded by [[…]]`, never deleted.
+- **`LOG.md`** — append-only session log, **newest first**. One dated entry per working session: `## [YYYY-MM-DD] — <title>` with **What changed**, **Decisions** (+why), **Learnings / insights**, **Open / next**. Agent-maintained.
+- **`PLAN.md`** — the active plan for in-flight work, written *before* executing (goal, steps, files, open decisions, phase checkboxes). It exists so a context reset or a later session can resume — a plan that lives only in chat is lost. Folded into `LOG.md` and cleared when the work ships.
+
+**Session workflow:** (1) *Orient* — read `Notes.md`, the top 2–3 `LOG.md` entries, and `PLAN.md`; the latest `## Open / next` is the starting point. (2) *Plan* — non-trivial work goes to `PLAN.md` before execution. (3) *Execute* — keep `PLAN.md` ticking. (4) *Log* — prepend the session entry to `LOG.md`, written for a reader who wasn't there. (5) *Sync* — propose a `Notes.md` diff if project state changed. (6) *Promote* — flag generalisable learnings for the wiki.
+
+**Interop:** promoted Base Notes cite the originating `LOG.md` entry in `sources:`. Project unknowns go to `04 Indexes/Open Questions.md`, not a separate silo. `/digest` may scan recent project `LOG.md` entries. Keep the two logs distinct — `04 Indexes/Wiki Log.md` records vault-wide ops; a project's `LOG.md` records session work inside one project; a promotion touches both.
+
+**Meta-learnings** (how to work, not what the code does — a prompt pattern, an approach that worked unusually well, a workflow that kept failing) are logged in `LOG.md` under *Learnings*. Recurring ones graduate to either a Base Note (knowledge worth keeping) or a `CLAUDE.md` co-evolution edit (a rule the agent should always follow) — the latter when the same correction recurs.
+
+Full reference: [[Working with Claude]] in `04 Indexes/`.
+
 ---
 
 ## Conventions
