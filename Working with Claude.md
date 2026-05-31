@@ -78,13 +78,14 @@ The lifecycle of a piece of knowledge:
 
 ## Working with projects
 
-Projects in `07 Projects/<name>/` are operationally siloed but they shouldn't be amnesiac. Each project session should leave a trail Claude can pick up next time without re-deriving context. Three files per project carry that:
+Projects in `07 Projects/<name>/` are operationally siloed but they shouldn't be amnesiac. Each project session should leave a trail Claude can pick up next time without re-deriving context. Four files per project carry that:
 
 | File | Role | Who writes |
 |------|------|------------|
-| **`Notes.md`** | Living overview — current state, architecture, key decisions. The "where things stand" doc. | Shared. Claude proposes diffs; user owns it. |
+| **`Notes.md`** | Living overview — current state, architecture, subsystem map. The "where things stand" doc. Holds a short pointer to `DECISIONS.md`, not the decisions themselves. | Shared. Claude proposes diffs; user owns it. |
 | **`LOG.md`** | Append-only session log, **newest first**. One dated entry per working session. | Claude maintains. |
 | **`PLAN.md`** | The active plan for in-flight work. Survives context loss so work can resume. Cleared/archived into `LOG.md` when the work ships. | Claude maintains. |
+| **`DECISIONS.md`** | Load-bearing decisions **and the active constraints they imply** — the do/don't rules to check before editing. Created when the first load-bearing decision appears. | Claude proposes; user confirms. |
 
 (Existing example to match: [[Obsidian SSH/LOG]] — dated entries, P0/P1/P2 grouping, an `## Open / next` tail.)
 
@@ -95,6 +96,7 @@ Before doing project work, Claude runs this — it's the "orient" step made expl
 - [ ] Read `Notes.md` — current state, architecture, decisions.
 - [ ] Read the top 2–3 `LOG.md` entries — what recent sessions did and left open.
 - [ ] Read `PLAN.md` if it exists — is there in-flight work to resume?
+- [ ] Skim `DECISIONS.md` if it exists — the **Constraint** lines are the do/don't rules that must not be violated this session.
 - [ ] Check `## Open / next` in the latest `LOG.md` entry — that's the intended starting point.
 - [ ] Cross-check load-bearing concepts against `05 Base Notes/` — link what exists, note what should.
 - [ ] Confirm the session's goal with the user if `PLAN.md` and the user's ask disagree.
@@ -104,12 +106,13 @@ Before doing project work, Claude runs this — it's the "orient" step made expl
 1. **Orient** — run the session-start checklist above. That's the working context; don't re-derive it.
 2. **Plan** — for anything non-trivial, write the plan to `PLAN.md` *before* executing: goal, steps, files touched, open decisions. If the user approves a plan in-session, it lands here so a later session (or a context reset) can resume it.
 3. **Execute** — do the work. Keep `PLAN.md` ticking — check off steps, note deviations.
-4. **Log** — at the end of the session (or a meaningful chunk), prepend a dated entry to `LOG.md`:
+4. **Log** — at the end of the session, *and before any auto-compact*, prepend (or refresh) a dated entry in `LOG.md`:
    - `## [YYYY-MM-DD] — <session title>`
-   - **What changed** — concrete deltas, grouped by priority/area if large.
-   - **Decisions** — choices made and *why* (the reasoning is the valuable part).
+   - **What changed** — the deltas a diff *won't* explain (the why, the surprises). Don't hand-transcribe the file-by-file change list — `git log` already has that.
+   - **Decisions** — choices made and *why* (the reasoning is the valuable part). Load-bearing ones get promoted to `DECISIONS.md` (see below).
    - **Learnings / insights** — see below.
    - **Open / next** — what's unfinished, what's blocked, what the next session should pick up.
+   - **Multi-idea sessions:** if the session covered more than one thread, give each its own `**Thread: <name>**` sub-block. A big tangent that won't finish now doesn't get buried in prose — it becomes an `## Open / next` item or a fresh `PLAN.md` stub, so it's resumable.
 5. **Sync `Notes.md`** — if the session changed the project's overall state or architecture, propose a diff to `Notes.md`. `LOG.md` is the history; `Notes.md` is the current truth.
 6. **Promote** — generalisable learnings get flagged for the wiki (see below). When `PLAN.md` work is fully shipped, fold its outcome into the latest `LOG.md` entry and clear the file.
 
@@ -122,14 +125,25 @@ Before doing project work, Claude runs this — it's the "orient" step made expl
   - **Generalisable** — an interesting technique, a reusable approach, a non-obvious insight, *an interesting way a task got solved* — → flagged for promotion to a `05 Base Notes/` page via the Project Bridge. Claude **proposes**, doesn't auto-create — projects invent throwaway terminology that shouldn't pollute the permanent layer. During `/reindex`, terms repeated across 2+ projects with no Base Note are strong promotion candidates.
 - The test for "is this a wiki learning or a project log entry": *would this help on a different project?* If yes, propose it upward. If it's only true inside this repo, it stays in the project.
 
-### Decision records
+### Writing the log before auto-compact
 
-Most decisions live fine as a `**Decisions**` line in a `LOG.md` entry. But a decision that is **load-bearing** — it shapes the architecture, it'll be questioned later, reversing it is expensive — gets promoted to a lightweight decision record so the *why* doesn't get buried in chronological log scroll.
+The `LOG.md` entry isn't a session diary written once at the end — it's **the memory that outlives the context window.** Auto-compact often means there is no clean "session end": context fills, compaction fires, and the pre-compaction reasoning (the *why* behind what was done) is exactly what gets summarised away.
 
-- **Where:** a `## Decisions` section in `Notes.md`, or a dedicated `DECISIONS.md` if a project accumulates many. Newest first.
-- **Format** (ADR-lite): `### [YYYY-MM-DD] <decision title>` → **Context** (what forced the choice) → **Decision** (what was chosen) → **Why** (alternatives rejected and the reason) → **Status** (`accepted` / `superseded by …`).
+- **Treat "approaching compaction" as a checkpoint, not just session end.** When context is getting full, append or refresh the current `LOG.md` entry *from full context first*. A session that compacts three times should touch the log three times.
+- **Never let compaction be the first summarisation of the session.** You summarise it deliberately into the log; you don't let the compactor do it lossily for you.
+- **Checkpoints can be terse.** A pre-compact checkpoint may be a running scratch of decisions + open threads; clean it into a proper entry at true session end.
+- **Mechanism (no app code):** a `PreCompact` hook in `settings.json` injects a "write/refresh the LOG entry now" reminder at the compaction boundary — the same trigger pattern as the per-repo `CLAUDE.md`. Relying on Claude to *remember* to log is weaker than a hook that fires at the boundary. Installed via `second-brain-skills` (it owns `~/.claude/` wiring).
+
+### Decision records — `DECISIONS.md`
+
+Most decisions live fine as a `**Decisions**` line in a `LOG.md` entry. But a decision that is **load-bearing** — it shapes the architecture, it'll be questioned later, reversing it is expensive — gets promoted to a dedicated `DECISIONS.md` so the *why* doesn't get buried in chronological log scroll, and so the **constraint it implies** is captured right next to it.
+
+- **Where:** a dedicated `DECISIONS.md` at the project root (not inside `Notes.md` — `Notes.md` keeps only a short pointer). Newest first.
+- **Stable ids + referents.** Each decision is `### D-NNN — <title>` and carries a **`Referent`** — the `path/glob` · `symbol` · `subsystem` it binds. Referents must be concrete and greppable: they are how a decision is retrieved at the moment it matters (by a person grepping, or by a memory layer indexing the repo). An id never changes and never gets renumbered, even when superseded.
+- **Format** (ADR-lite): `### D-NNN — <title>` → **Status** (`accepted` / `superseded by D-NNN` / `revisited`) → **Referent** → **Context** (what forced the choice) → **Decision** (what was chosen) → **Why** (alternatives rejected) → **Constraint** (the do/don't imperative the decision implies — the thing to check before editing the referent).
+- **The Constraint line is the distillation, kept *on* the decision.** A decision is "we chose clock-not-LRU eviction"; its constraint is "don't add a second eviction path." Keeping the constraint on the decision rather than in a separate registry means the rule and its rationale never drift apart — and the Constraint line is exactly what a `PreToolUse:Edit` memory layer would inject before the model writes.
 - **When Claude writes one:** propose it at log-time when a session's `**Decisions**` line is clearly load-bearing — don't silently inline a major architectural call and move on. The user confirms.
-- **Superseding, not deleting:** when a later decision overturns an earlier one, mark the old record `superseded by [[…]]` rather than removing it. The reversal history is itself valuable.
+- **Superseding, not deleting:** when a later decision overturns an earlier one, mark the old record `superseded by D-NNN` (and retire its Constraint) rather than removing it. The reversal history is itself valuable.
 - **Wiki link:** if a decision rests on a concept with a Base Note, cite it. If it *establishes* a generalisable principle, that's a promotion candidate.
 
 ### How projects and the wiki interop
@@ -150,6 +164,21 @@ A distinct, interesting category: not "what we learned about the codebase" but "
 - Capture these in the `LOG.md` **Learnings** section like any other learning.
 - If a pattern recurs across projects, it's a candidate for either a `05 Base Notes/` page (e.g. an "Effective Claude Patterns" note) **or** a `CLAUDE.md` co-evolution edit — the latter when it's a *rule Claude should always follow*, the former when it's *knowledge worth keeping*.
 - The dividing line: a meta-learning that should change Claude's default behaviour → `CLAUDE.md` (and log the change in `Wiki Log.md`). A meta-learning that's just useful to remember → Base Note. Repeated corrections of the same behaviour are the strongest signal for a `CLAUDE.md` edit.
+
+### General principles — working on projects with Claude
+
+The Notes/LOG/PLAN mechanics above are *this vault's* convention. The principles below are vault-agnostic — they hold for any project Claude works on, and they're the thing to keep in mind when the mechanics don't obviously cover a situation.
+
+- **Orient before acting; don't re-derive what's written down.** The first move in any session is to read the existing context (`Notes.md`, recent `LOG.md`, `PLAN.md`, the actual code) rather than reconstruct it from memory or assumption. Most wasted work comes from starting before understanding where things stand.
+- **Scope a session to one shippable thing.** A session should have a single goal you can name and finish. "Do the rest" is not a goal — break it down. Unfinished scope gets finished now or written into `## Open / next`, never left implicit.
+- **Plan in writing before non-trivial execution.** If the work has more than a couple of steps or any open decisions, the plan goes in `PLAN.md` *first*. A plan that lives only in the conversation is lost on the next context reset.
+- **Ask when the decision is genuinely the user's; otherwise pick the sensible default and say so.** Stop and ask when a choice changes *what* gets built, depends on the user's intent/priorities, or is expensive to reverse. For conventional choices with an obvious default, proceed and state the assumption — don't manufacture a question.
+- **Keep changes reviewable.** Prefer small, coherent diffs that match the surrounding code's style and idiom over large rewrites. Big edits should be diffs the user can accept or reject, not surprise overhauls — the same "never silently rewrite" rule the wiki layer follows.
+- **Report outcomes faithfully.** If tests fail, say so with the output. If a step was skipped, say that. "Done" means done *and verified* — state that plainly, and hedge only when something is genuinely unverified. Never claim a result you didn't observe.
+- **Confirm before irreversible or outward-facing actions.** Deleting/overwriting files you didn't create, pushing, publishing, anything hard to undo — confirm first unless explicitly told to proceed. Approval for one such action doesn't carry to the next. Before deleting or overwriting, look at the target: if it contradicts how it was described, surface that instead of proceeding.
+- **The why is the durable part.** When recording a decision, the reasoning (what was rejected and why) outlives the decision itself. A choice without its rationale gets re-litigated; a choice with it can be confidently kept or overturned. Supersede, don't delete.
+- **Don't let project work become a knowledge leak.** A learning that would help on a *different* project belongs in the wiki, not trapped in the project folder. The promotion test — "would this help elsewhere?" — applies to every non-obvious thing learned, not just code.
+- **Surface contradictions, don't paper over them.** If new work conflicts with a prior decision, a Base Note, or what the user just said, flag it. The trust rule applies: a current statement beats a stale recorded fact, but the conflict gets named, not silently resolved.
 
 ## Personal tracking
 
