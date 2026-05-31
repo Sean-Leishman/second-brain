@@ -30,8 +30,12 @@ cssclasses:
 - [ ] Task 1
 - [ ] Task 2
 
+## Decisions
+
+*Load-bearing decisions live in `DECISIONS.md` at the project root (id + referent + the constraint each implies). This section keeps only a pointer; day-to-day choices stay in `LOG.md`. See [[Working with Claude]].*
+
 ## Notes
 
-## Log
-### <% time %>
-- Started project
+---
+
+This file is the project's `Notes.md` — the living overview. Session-by-session work goes in a sibling `LOG.md` (Project LOG template) and in-flight plans go in `PLAN.md` (Project PLAN template).
