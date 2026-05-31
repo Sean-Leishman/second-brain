@@ -87,7 +87,9 @@ Projects in `07 Projects/<name>/` are operationally siloed but they shouldn't be
 | **`PLAN.md`** | The active plan for in-flight work. Survives context loss so work can resume. Cleared/archived into `LOG.md` when the work ships. | Claude maintains. |
 | **`DECISIONS.md`** | Load-bearing decisions **and the active constraints they imply** — the do/don't rules to check before editing. Created when the first load-bearing decision appears. | Claude proposes; user confirms. |
 
-(Existing example to match: [[Obsidian SSH/LOG]] — dated entries, P0/P1/P2 grouping, an `## Open / next` tail.)
+**The loop, in one line:** *orient (read) → plan (`PLAN.md`) → execute → log (`LOG.md`, before compaction) → sync (`Notes.md`) → promote (wiki).* The sections below expand each step; an agent that internalises this line can derive the rest.
+
+(Existing example to match: [[Obsidian SSH/LOG]] — dated entries with **What changed / Decisions / Learnings / Open / next**, newest first. Note its older entries use ad-hoc `P0/P1/P2` headers; the current format is the four bold fields, not priority grouping.)
 
 ### Session-start checklist
 
