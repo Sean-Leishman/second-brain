@@ -129,7 +129,7 @@ Before doing project work, Claude runs this — it's the "orient" step made expl
 
 ### Writing the log before auto-compact
 
-The `LOG.md` entry isn't a session diary written once at the end — it's **the memory that outlives the context window.** Auto-compact often means there is no clean "session end": context fills, compaction fires, and the pre-compaction reasoning (the *why* behind what was done) is exactly what gets summarised away.
+Step 4 above says "before any auto-compact" — this is why it matters. The `LOG.md` entry isn't a session diary written once at the end; it's **the memory that outlives the context window.** Auto-compact often means there is no clean "session end": context fills, compaction fires, and the pre-compaction reasoning (the *why* behind what was done) is exactly what gets summarised away.
 
 - **Treat "approaching compaction" as a checkpoint, not just session end.** When context is getting full, append or refresh the current `LOG.md` entry *from full context first*. A session that compacts three times should touch the log three times.
 - **Never let compaction be the first summarisation of the session.** You summarise it deliberately into the log; you don't let the compactor do it lossily for you.
