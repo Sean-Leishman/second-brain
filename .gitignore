@@ -1,3 +1,12 @@
+# Root-level notes are CONTENT, not template. The folder rules below never reached the repo
+# root, so `Agent Memory.md` — a private Domain MOC naming a real person's unpublished paper —
+# sat public for six weeks. Allowlist the schema docs; ignore every other root note by default.
+/*.md
+!/README.md
+!/CLAUDE.md
+!/00 Vault Guide.md
+!/Working with Claude.md
+
 .obsidian/workspace.json
 00 Bases/**.md
 01 Fleeting Notes/**.md

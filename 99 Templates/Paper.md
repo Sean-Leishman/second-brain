@@ -1,26 +1,38 @@
----
-created: <% tp.file.creation_date("YYYY-MM-DDTHH:mm:ss") %> 
-modified: <% tp.file.last_modified_date("YYYY-MM-DDTHH:mm:ss") %>
 <%*
-let name = await tp.system.prompt("Enter Title");
-if (!name) {
-	name = tp.file.creation_date("YYYY-MM-DD HH-MM-SS");
+let title = await tp.system.prompt("Enter title")
+if (!title) {
+	title = tp.file.creation_date("YYYY-MM-DD HH-mm-ss");
 }
-await tp.file.rename(name);%>
-title: <%* tR += `${name}` %>
-alias: [<%* tR += `${name}` %>]
-cssclasses: 
+await tp.file.rename(title)
+let time = tp.date.now("YYYY-MM-DD:HH-mm")
+-%>
+---
+title: <% title %>
+created: <% time %>
+author:
+year:
+doi:
+links:
+tags: paper
+cssclasses:
   - center-images
   - status-tag
   - base-notes
-  - papers
 ---
-##### Status: #InProgress 
-##### Tags: [[../04 Indexes/Dissertation|Dissertation]]
-##### Title: 
-##### Author:
-##### Year: 
-```json
+> [!note]+ **Properties**
+> **Created:** <% time %>
+> **Status:** #Inbox
+> **Tags:** [[../04 Indexes/Dissertation|Dissertation]]
+> **Author:**
+> **Year:**
+> **DOI:**
+---
+# Abstract
 
-```
----
+# Key Contributions
+
+# Methodology
+
+# Results
+
+# Notes

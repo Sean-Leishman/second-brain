@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+"""Turn Claude Code transcripts into readable digests, so a conversation can be ingested.
+
+ transcript-digest [YYYY-MM-DD] list that day's conversations (default: today)
+ transcript-digest <8-char-id> [--full] print one conversation's digest
+
+A conversation is a raw source like any other: the user's turns verbatim (their voice,
+never paraphrased) plus the agent's substantive replies. Decisions made in chat and never
+written down are the vault's biggest leak -- this is the tap.
+"""
+import json, os, sys, glob, datetime, pathlib
+
+ROOT = os.path.expanduser("~/.claude/projects")
+
+def turns(path):
+ for line in open(path):
+ try:
+ d = json.loads(line)
+ except json.JSONDecodeError:
+ continue
+ c = d.get("message", {}).get("content")
+ t = c if isinstance(c, str) else "".join(
+ x.get("text", "") for x in c if isinstance(x, dict) and x.get("type") == "text"
+ ) if isinstance(c, list) else ""
+ t = t.strip()
+ # hook noise, tool results and slash-command wrappers aren't conversation
+ if not t or t.startswith(("<", "[Request", "Caveat", "Base directory")):
+ continue
+ yield d.get("type"), t
+
+def convos(day):
+ for f in glob.glob(f"{ROOT}/*/*.jsonl"):
+ if os.path.basename(f).startswith("agent-"):
+ continue
+ if datetime.date.fromtimestamp(os.path.getmtime(f)).isoformat() != day:
+ continue
+ yield f
+
+def main():
+ arg = sys.argv[1] if len(sys.argv) > 1 else datetime.date.today().isoformat()
+
+ if "-" in arg and len(arg) == 10: # a date -> list
+ for f in sorted(convos(arg), key=os.path.getmtime):
+ u = [t for r, t in turns(f) if r == "user"]
+ # Claude Code slugifies the cwd into the dir name; strip the home prefix back off
+ home = str(pathlib.Path.home()).replace("/", "-")
+ proj = f.split("/")[-2].replace(f"{home}-Projects-", "").replace(home, "~")
+ print(f"{os.path.basename(f)[:8]} {proj:24} {len(u):3} turns {u[0][:60] if u else ''}")
+ return
+
+ hits = [f for f in glob.glob(f"{ROOT}/*/*.jsonl") if os.path.basename(f).startswith(arg)]
+ if not hits:
+ sys.exit(f"no conversation starting {arg}")
+ full = "--full" in sys.argv
+ for role, t in turns(hits[0]):
+ if role == "user":
+ print(f"\n## USER\n{t}")
+ elif len(t) > (0 if full else 400): # skip the agent's throat-clearing
+ print(f"\n### agent\n{t if full else t[:3000]}")
+
+if __name__ == "__main__":
+ main()
