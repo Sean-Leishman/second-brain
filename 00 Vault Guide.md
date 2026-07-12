@@ -1,9 +1,9 @@
 ---
 title: Vault Guide
-created: 2026-04-04
+created: 
 type: guide
 cssclasses:
-  - center-images
+ - center-images
 ---
 Workflows for this Obsidian vault. Covers the Zettelkasten pipeline, task management, Telegram bot routing, and how digital and analogue systems fit together.
 
@@ -13,14 +13,68 @@ Workflows for this Obsidian vault. Covers the Zettelkasten pipeline, task manage
 
 A hybrid analogue + digital system. Each medium does what it's best at.
 
-| Medium                                  | What it handles                                                       | Why                                    |
+| Medium | What it handles | Why |
 | --------------------------------------- | --------------------------------------------------------------------- | -------------------------------------- |
-| **Analogue: Life Tracker** (A5 journal) | Daily journal, habit tracking, reflection, goals, personal philosophy | Slow thinking, mindfulness, no screen  |
-| **Analogue: Pocket Jot** (Field Notes)  | Capture fleeting thoughts, quick todos, observations                  | Always on you, zero friction           |
-| **Obsidian (this vault)**               | Knowledge management, source notes, project notes, task tracking      | Searchable, linkable, Dataview queries |
-| **Obsidian (work vault)**               | Work project notes, meeting notes, work todos                         | Keeps work context isolated            |
+| **Analogue: Life Tracker** (A5 journal) | Daily journal, habit tracking, reflection, goals, personal philosophy | Slow thinking, mindfulness, no screen |
+| **Analogue: Pocket Jot** (Field Notes) | Capture fleeting thoughts, quick todos, observations | Always on you, zero friction |
+| **Obsidian (this vault)** | Knowledge management, source notes, project notes, task tracking | Searchable, linkable, Dataview queries |
+| **Obsidian (work vault)** | Work project notes, meeting notes, work todos | Keeps work context isolated |
 
 **The bridge between analogue and digital is the weekly review.** No OCR. Pocket jot items get triaged into Obsidian Inbox or the Life Tracker journal on Sundays.
+
+---
+
+## Read this first — what the vault is for, and which pages are yours
+
+*Added, after "I find this vault very overwhelming at the moment." The overwhelm had a cause: nobody had ever written down which pages you're supposed to read, or which notes you're supposed to write. Both are below.*
+
+### The vault does two jobs, and they have opposite economics
+
+| | **Execution layer** | **Learning layer** |
+|---|---|---|
+| What a note is *for* | serving the board — a means to a decision | **the note *is* the output** |
+| Should Claude write it? | **Yes.** Read it, act, move on. The document is the point. | **No.** *The writing is the learning.* A note Claude wrote hands you a document and keeps the understanding. |
+| Default mode | Draft (Claude writes) | **Curate (you write)** |
+| Typical notes | design specs, competitive analysis, project memory, strategy | concepts and mental models — anything you want to *think with* in a year |
+
+Your own diagnosis, which this exists to fix: *"**killer is collecting too much and never visiting**"* and *"if I want to learn the note, or think about a problem, **I need to pay attention to it**."*
+
+So the rule: **Claude drafting a note is legitimate only in the execution layer.** In the learning layer a drafted note is worse than no note, because it *looks* like progress. A collection of things you didn't write is a reference library, not a thinking tool — and this Guide already warns about that below (*"if you only have source notes and no base notes, you have a reference library"*). The 2026 version of the same warning: **if you only have Claude's base notes, it's still a reference library — just one you didn't read.**
+
+> [!warning] **Where this stands.** Curate mode has **never been used.** Every Base Note written since May — thirteen — was drafted by Claude, and **none has ever been accepted.** That's the execution layer eating the learning layer.
+
+### Which pages are yours
+
+**Read these:**
+
+| Page | When |
+|---|---|
+| [[Current WIP]] | **Daily.** The one page that says what to do next. If you read nothing else, read this. |
+| [[Open Questions]] | The research backlog — when choosing what to dig into. |
+| [[Ventures]] | *"When the pile feels confusing, not daily."* It says what everything *is*; the board says what to *do*. |
+| `08 Trackers/Review Queue.base` | When judging Claude's drafts. |
+| `08 Trackers/Unfiled.base` | Notes you wrote and never filed. Say **"file this"** and they're gone. |
+
+**These are Claude's bookkeeping — you should never need to open them:** `Wiki Log` (its audit trail, so you can check and revert what it changed), `Wiki Index` (the catalog it searches), `Wiki Map` (domain shape).
+
+*If you ever find yourself reading Claude's files to work out what's going on, that's a bug in your surfaces — say so. The fix belongs in [[Current WIP]], not in a habit of reading the log.*
+
+### Who writes what, per operation
+
+| Op | Claude does | You do |
+|----|-------------|--------|
+| **`/ingest`** | all of it — source → Base Notes, provenance, index, log | nothing |
+| **`/collate`** | searches **the vault**, clusters, proposes a skeleton. **No writes** | **write the note** |
+| **`/study`** | fetches **the world** — finds sources, writes them up, proposes a skeleton — **then stops** | **write the Base Note** |
+| **`/draft`** | writes the whole note, cited | review it |
+| **`/query`** | answers with links, logs what it couldn't answer | judge |
+| **`/lint`**, **`/reindex`** | propose a punch list | pick |
+
+**Collate searches the vault; Study fetches the world.** Both stop before the note gets written — **the stop is the point, not an omission.** Study's failure condition, in as many words: *if you finish a Study having read a good note instead of written a bad one, the op failed.*
+
+**Ceremony is Claude's job, never yours.** Templates leave `summary`, `tags`, `links`, `sources` and `Origin` blank on purpose, and `Base.md` doesn't even ask for a title — new note, start typing. Claude never asks you for a tag; it guesses, says so, and moves on. Say **"file this"** when you're done, or don't. *Structure that taxes capture is worse than no structure — the failure mode isn't a messy vault, it's a vault you stop writing into.*
+
+Agent-side detail: [[Working with Claude]].
 
 ---
 
@@ -35,9 +89,44 @@ A hybrid analogue + digital system. Each medium does what it's best at.
 | `04 Indexes` | Topic MOCs linking related sources (Piranesi-style index) |
 | `05 Base Notes` | Permanent/evergreen atomic notes |
 | `06 Daily Notes` | Lightweight daily log (tasks + notes, not journaling) |
-| `07 Projects` | Project notes, meetings, and todos |
+| `07 Projects` | Project notes, meetings, and todos — **canonical home of project memory, symlinked into the code repos** (see below) |
 | `08 Trackers` | Task management + consumption lists |
 | `99 Templates` | Note templates |
+| `scripts/` | Vault tooling — `vault-project`, `transcript-digest` |
+
+---
+
+## Code Repos and Project Memory
+
+*Added. If you work on code, this is the part of the vault that touches your day most.*
+
+**A project's memory lives in the vault, not in the repo.** For every project with code, these five files are canonical in `07 Projects/<name>/` and **symlinked into the repo root**:
+
+| File | What it holds |
+|---|---|
+| `Notes.md` | Current truth — overview, architecture, subsystem map |
+| `LOG.md` | Append-only session log, newest first |
+| `Todo.md` | The build order |
+| `PLAN.md` | In-flight work (absent when nothing's in flight) |
+| `DECISIONS.md` | Load-bearing decisions, each with the constraint it implies |
+
+Edit them from either side — repo or vault — it's one file. The repo `.gitignore`s them, because the vault owns their history.
+
+**Why it's a symlink and not a copy.** once a project's central hypothesis was **falsified**, and the finding was written to a `LOG.md` that lived only in the repo. The vault never saw it. [[Current WIP]] spent a full day telling you to go run the experiment that had already run and already failed — and the next Reindex copied that dead state into a brand-new page, because it trusted the board. *A forked copy is invisible to the vault, and the wiki cannot reason about what it cannot see.*
+
+**The agent contract lives in the repo, as `AGENTS.md`.** It's the model-agnostic filename (Claude Code, Codex, Cursor and Gemini all read it), so `CLAUDE.md`, `GEMINI.md` and `.cursorrules` are just symlinks pointing at it. Its top section is *generated* from `99 Templates/Project AGENTS.md` — **to change what every project tells its agent, edit that template, don't edit a repo.** Project-specific instructions go below the marker, where they survive. Each repo also carries a gitignored `.vault/` symlink to the vault root, so an agent working in the repo can actually read [[Working with Claude]] and update [[Current WIP]].
+
+**One command does all of it — never wire this by hand:**
+
+```
+scripts/vault-project adopt <repo> # bring a repo under the convention
+scripts/vault-project sync # ship a template change to every repo
+scripts/vault-project check # prints coverage; exits 1 if anything has forked
+```
+
+`check` is the one to run if you're ever unsure. It prints `adopted N/M`, names any repo whose memory files have drifted out of the vault's sight, **and catches a stale board** — if a project's `LOG.md` or `DECISIONS.md` has an entry newer than its `Last:` stamp on [[Current WIP]], something happened that the board never heard about. It exits 1 while anything is wrong.
+
+That last check exists because prose couldn't do the job: the rule *"a session that changes a project's status updates the board in the same pass"* was written once, and **broken the next day** — a project's a load-bearing decision was accepted and shipped in four commits while the board still told you the decision was open. **Coverage is a number something prints, never an adjective anyone writes.** See [[Asserted Safeguards — The Claim Is What Stops the Check]].
 
 ---
 
@@ -48,8 +137,8 @@ Notes flow through four stages. Each stage has a folder.
 ```
 Capture ──▶ Process ──▶ Connect ──▶ Index
 
-01 Fleeting    02 Sources     05 Base       04 Indexes
-  Notes       (literature)    Notes          (MOCs)
+01 Fleeting 02 Sources 05 Base 04 Indexes
+ Notes (literature) Notes (MOCs)
 ```
 
 ### Stage 1: Fleeting Notes (`01 Fleeting Notes/`)
@@ -118,27 +207,27 @@ Fleeting notes are temporary. The core pattern: **read → decide → create/mer
 
 ```
 Is it about a specific source (paper/video/book)?
-  YES → 02 Sources/
-  NO ↓
+ YES → 02 Sources/
+ NO ↓
 
 Is it a self-contained concept you can explain standalone?
-  YES → 05 Base Notes/ (new or merge into existing)
-  NO ↓
+ YES → 05 Base Notes/ (new or merge into existing)
+ NO ↓
 
 Is it research/work for a specific project?
-  YES → 07 Projects/<name>/Notes.md
-  NO ↓
+ YES → 07 Projects/<name>/Notes.md
+ NO ↓
 
 Is it a todo or action item?
-  YES → 08 Trackers/Inbox.md
-  NO ↓
+ YES → 08 Trackers/Inbox.md
+ NO ↓
 
 Is it multiple things mixed together?
-  YES → Split and route each piece above
-  NO ↓
+ YES → Split and route each piece above
+ NO ↓
 
 Is it junk?
-  YES → Delete
+ YES → Delete
 ```
 
 **Fleeting → Base Note (new concept):**
@@ -176,7 +265,7 @@ Read through, highlight distinct ideas, and route each piece separately. A singl
 Several popular note-taking systems use similar concepts with different names. The distinction between **literature notes** (our Source Notes) and **permanent notes** (our Base Notes) is the key one.
 
 | Concept | Zettelkasten (Luhmann) | PARA (Tiago Forte) | This Vault |
-|---------|----------------------|---------------------|------------|
+| ---------------------- | ----------------------- | ------------------------- | ------------------------ |
 | Raw capture | Fleeting notes | Inbox | `01 Fleeting Notes/` |
 | Notes *about* a source | Literature notes | Resources | `02 Sources/` |
 | Your own ideas | Permanent notes | Notes (in Projects/Areas) | `05 Base Notes/` |
@@ -335,29 +424,29 @@ Uses a **Bullet Journal index** — first pages are a table of contents built as
 
 **Structure:**
 ```
-Pages 1-4:    INDEX (topic → page numbers, built as you go)
-Pages 5-8:    FUTURE LOG (6 months of key dates)
-Pages 9-10:   YEARLY GOALS + IDENTITY STATEMENT
-Pages 11-12:  QUARTERLY GOALS
+Pages 1-4: INDEX (topic → page numbers, built as you go)
+Pages 5-8: FUTURE LOG (6 months of key dates)
+Pages 9-10: YEARLY GOALS + IDENTITY STATEMENT
+Pages 11-12: QUARTERLY GOALS
 
 Then flowing pages:
-  → Monthly Log (calendar + task list)
-  → Daily entries (3 intentions, habit row, evening log)
-  → Collections as needed (e.g., "flat hunting", "gift ideas")
-  → Next Monthly Log...
+ → Monthly Log (calendar + task list)
+ → Daily entries (3 intentions, habit row, evening log)
+ → Collections as needed (e.g., "flat hunting", "gift ideas")
+ → Next Monthly Log...
 ```
 
 **Index example:**
 ```
 INDEX
 ──────────────────────────────
-Yearly Goals .............. 9
-Q2 Goals ................. 11
-April Monthly Log ........ 13
-Habit Tracker - Apr ....... 15
-Flat Hunting Notes .... 22, 47
-Books Read 2026 .......... 34
-May Monthly Log .......... 52
+Yearly Goals.............. 9
+Q2 Goals................. 11
+April Monthly Log........ 13
+Habit Tracker - Apr....... 15
+Flat Hunting Notes.... 22, 47
+Books Read 2026.......... 34
+May Monthly Log.......... 52
 ```
 
 **BuJo rapid logging symbols:**
@@ -486,7 +575,7 @@ Brief overview + key bullet points.
 
 ```
 To Read ──▶ Reading ──▶ Processing ──▶ Indexed
-(backlog)   (fleeting)    (source)      (linked)
+(backlog) (fleeting) (source) (linked)
 ```
 
 ### Stage 1: Backlog
@@ -545,10 +634,10 @@ Convert to permanent source note using Paper template in `02 Sources/Papers/`.
 ```
 07 Projects/
 ├── Project Name/
-│   ├── Todo.md        ← project tasks
-│   ├── Notes.md       ← running notes
-│   └── Meeting Notes/
-│       └── 2026-04-05.md
+│ ├── Todo.md ← project tasks
+│ ├── Notes.md ← running notes
+│ └── Meeting Notes/
+│ └──.md
 ```
 
 ### CLI
@@ -561,7 +650,7 @@ obsidian append path="07 Projects/Project/Todo.md" content="\n- [ ] New task"
 obsidian tasks path="07 Projects/Project" todo
 
 # Create meeting note
-obsidian create path="07 Projects/Project/Meeting Notes/2026-04-05.md" open
+obsidian create path="07 Projects/Project/Meeting Notes/.md" open
 ```
 
 ---

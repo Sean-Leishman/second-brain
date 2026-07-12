@@ -1,0 +1,42 @@
+filters:
+  or:
+    - file.hasTag("Draft")
+    - file.hasTag("Working")
+    - file.hasTag("Inbox")
+views:
+  - type: table
+    name: Awaiting verdict
+    filters:
+      and:
+        - file.hasTag("Draft")
+    order:
+      - file.name
+      - created
+      - summary
+    sort:
+      - property: created
+        direction: ASC
+  - type: table
+    name: In progress
+    filters:
+      and:
+        - file.hasTag("Working")
+    order:
+      - file.name
+      - created
+      - summary
+    sort:
+      - property: created
+        direction: DESC
+  - type: table
+    name: Source inbox
+    filters:
+      and:
+        - file.hasTag("Inbox")
+        - file.inFolder("02 Sources")
+    order:
+      - file.name
+      - created
+    sort:
+      - property: created
+        direction: DESC

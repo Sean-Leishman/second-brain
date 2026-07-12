@@ -1,0 +1,272 @@
+#!/usr/bin/env python3
+"""Keep project repos and the vault in one shape.
+
+ vault-project adopt <repo-path> [vault-name] register a repo, pull its memory files into the vault
+ vault-project sync [name...] re-render the shared AGENTS.md region, seed + relink (default: all)
+ vault-project list registry + drift check
+
+`AGENTS.md` is the canonical agent contract in every repo -- model-agnostic, git-tracked.
+`CLAUDE.md` (and `.cursorrules`, `GEMINI.md`) are relative symlinks to it, so every tool
+reads the same file. Its shared region is rendered from `99 Templates/Project AGENTS.md`:
+edit the template once, run sync, every repo has it.
+
+Memory files (Notes/LOG/PLAN/DECISIONS/Todo) are canonical in the vault and symlinked
+into the repo -- which is why the repo gitignores them.
+"""
+import os, re, sys, datetime, subprocess
+from pathlib import Path
+
+VAULT = Path(__file__).resolve().parent.parent
+PROJECTS = VAULT / "07 Projects"
+TEMPLATES = VAULT / "99 Templates"
+REGISTRY = PROJECTS / "registry.tsv"
+SHARED = TEMPLATES / "Project AGENTS.md"
+
+# ponytail: one canonical file, symlinks for the rest. Add a name here when a new tool
+# invents its own filename; nothing else needs to change.
+ALIASES = ["CLAUDE.md", "GEMINI.md", ".cursorrules"]
+
+BEGIN = "<!-- vault:shared:begin -- generated from `99 Templates/Project AGENTS.md`; edits here are overwritten by `vault-project sync` -->"
+END = "<!-- vault:shared:end -->"
+
+# ponytail: PLAN.md is deliberately not seeded -- the template says it exists only while
+# work is in flight. It still gets symlinked if the vault copy shows up.
+SEED = {"Notes.md": "Project.md", "LOG.md": "Project LOG.md", "DECISIONS.md": "Project DECISIONS.md"}
+LINK = ["Notes.md", "LOG.md", "PLAN.md", "DECISIONS.md", "Todo.md"]
+
+# ponytail: one symlink to the vault root, not copies of the guide files. Copies drift;
+# this way `.vault/04 Indexes/Working with Claude.md` and `.vault/08 Trackers/Current WIP.md`
+# resolve from inside the repo, and the whole wiki is readable when a learning needs promoting.
+VAULT_LINK = ".vault"
+
+def registry():
+ if not REGISTRY.exists():
+ return {}
+ out = {}
+ for line in REGISTRY.read_text().splitlines():
+ line = line.strip()
+ if line and not line.startswith("#"):
+ name, repo = line.split("\t", 1)
+ out[name] = Path(os.path.expanduser(repo))
+ return out
+
+# ponytail: adopt/sync NEVER commit. A `git add -A` here once swept 457 lines of a
+# colleague session's real work into a commit called "Adopt vault project scaffolding"
+# (`<repo>` a2e079c; same mistake hid a 925-line diff under a project 8a88ff5). Wiring is
+# the only thing this script owns -- the user commits their own work, with its own message.
+
+BOARD = VAULT / "08 Trackers" / "Current WIP.md"
+
+def board_stale(name: str):
+ """The rule 'the board is not the log', made checkable.
+
+ A project whose LOG/DECISIONS carries a date newer than its board `Last:` stamp means
+ something happened that the board never heard about. That is not a tidiness issue: on
+ it cost a day (a project ran an experiment the board still told the user to
+ run), and once it did it again (a project a load-bearing decision was accepted and shipped in four
+ commits while the board said the decision was still open). Prose could not stop either.
+ """
+ if not BOARD.exists():
+ return None
+ vdir = PROJECTS / name
+ dates = []
+ for f in ("LOG.md", "DECISIONS.md"):
+ if not (vdir / f).exists():
+ continue
+ text = (vdir / f).read_text()
+ body = re.sub(r"\A---.*?\n---\n", "", text, flags=re.S) # frontmatter `created:` is not an event
+ body = re.sub(r"<!--.*?-->", "", body, flags=re.S) # nor is the template's commented-out example
+ dates += re.findall(r"\d{4}-\d{2}-\d{2}", body)
+ if not dates:
+ return None
+ newest = max(dates)
+
+ # the strand's line on the board, and the `Last:` stamp under it
+ board = BOARD.read_text()
+ at = board.find(f"[[{name}]]")
+ if at < 0:
+ at = board.find(f"**{name}**")
+ if at < 0:
+ # ponytail: not every project is a board strand -- gbp/`<repo>` are deliberately off it.
+ # Informational, never a failure: a check that cries wolf gets muted.
+ return None
+ stamped = re.search(r"\*Last:\s*(\d{4}-\d{2}-\d{2})", board[at:at + 2500])
+ if not stamped:
+ return f"no `Last:` stamp on the board (newest entry {newest})"
+ if newest > stamped.group(1):
+ return f"BOARD STALE: {f} has {newest}, board `Last:` says {stamped.group(1)}"
+ return None
+
+def find_repo(name: str):
+ """A vault project's repo, if one exists. Name or slug match under ~/Projects."""
+ root = Path.home() / "Projects"
+ for cand in {name, name.lower().replace(" ", "-"), name.replace(" ", "")}:
+ if (root / cand / ".git").is_dir():
+ return root / cand
+ return None
+
+def render(tpl: Path, name: str) -> str:
+ """Strip Templater syntax so the file is usable outside Obsidian."""
+ text = tpl.read_text()
+ text = re.sub(r"<%\*.*?-?%>\s*", "", text, flags=re.S) # the <%* let time =... %> header
+ text = text.replace("<% time %>", datetime.date.today().isoformat())
+ text = text.replace("<% tp.file.folder() %>", name).replace("<% title %>", name)
+ return re.sub(r"^\n+", "", text)
+
+def shared_block() -> str:
+ return f"{BEGIN}\n{SHARED.read_text().strip()}\n{END}\n\n"
+
+def inject(agents: Path) -> str:
+ """Insert or replace the shared region, leaving project-specific prose alone."""
+ block = shared_block()
+ if not agents.exists(): # block already ends in a blank line -- don't add another, or a
+ return f"# {agents.parent.name}\n\n{block}## Purpose\n\n*What this project is. Written by hand.*\n" # fresh file reports STALE on the next check
+ text = agents.read_text()
+ if BEGIN.split("--")[0] in text: # markers already there -> replace region
+ out = re.sub(re.escape(BEGIN.split("--")[0]) + r".*?" + re.escape(END) + r"\n*", block, text, flags=re.S)
+ return out
+ # first adoption: drop a hand-written "## Project memory" section, it's what the template replaces
+ text = re.sub(r"\n## Project memory\n.*?(?=\n## )", "\n", text, flags=re.S)
+ lines = text.splitlines(keepends=True)
+ at = 1 if lines and lines[0].startswith("# ") else 0
+ return "".join(lines[:at]) + "\n" + block + "".join(lines[at:]).lstrip("\n")
+
+def sync(name: str, repo: Path):
+ vdir = PROJECTS / name
+ vdir.mkdir(exist_ok=True)
+ if not repo.is_dir():
+ print(f" ! {name}: repo missing at {repo}")
+ return
+
+ # adopt: a real memory file in the repo is the canonical copy until the vault has one
+ for f in LINK:
+ rf, vf = repo / f, vdir / f
+ if rf.is_file() and not rf.is_symlink() and not vf.exists():
+ rf.replace(vf)
+ print(f" adopted {f} -> vault")
+
+ for f, tpl in SEED.items():
+ if not (vdir / f).exists():
+ (vdir / f).write_text(render(TEMPLATES / tpl, name))
+ print(f" seeded {f}")
+
+ for f in LINK:
+ vf, rf = vdir / f, repo / f
+ if not vf.exists():
+ continue
+ if rf.is_symlink() and rf.resolve() == vf.resolve():
+ continue
+ if rf.exists() and not rf.is_symlink():
+ print(f" ! {name}: {f} is a real file in the repo and the vault also has one -- resolve by hand")
+ continue
+ rf.unlink(missing_ok=True)
+ rf.symlink_to(vf)
+ print(f" linked {f}")
+
+ vl = repo / VAULT_LINK
+ if not (vl.is_symlink() and vl.resolve() == VAULT):
+ vl.unlink(missing_ok=True)
+ vl.symlink_to(VAULT)
+ print(f" linked {VAULT_LINK}/ -> vault root")
+
+ gi = repo / ".gitignore"
+ missing = [f for f in LINK + [VAULT_LINK] if f not in (gi.read_text().split() if gi.exists() else [])]
+ if missing:
+ with gi.open("a") as fh:
+ fh.write("\n# memory files are symlinks into the vault (canonical there)\n" + "\n".join(missing) + "\n")
+ print(f" gitignored {', '.join(missing)}")
+
+ # AGENTS.md is canonical. An existing tool-specific file is its content, not a rival.
+ agents = repo / "AGENTS.md"
+ if not agents.exists():
+ for alias in ALIASES:
+ src = repo / alias
+ if src.is_file() and not src.is_symlink():
+ subprocess.run(["git", "-C", str(repo), "mv", alias, "AGENTS.md"], capture_output=True)
+ if src.exists(): # not a git repo, or the file wasn't tracked
+ src.replace(agents)
+ print(f" {alias} -> AGENTS.md (canonical)")
+ break
+
+ new = inject(agents)
+ if not agents.exists() or agents.read_text() != new:
+ agents.write_text(new)
+ print(" AGENTS.md shared region updated")
+
+ for alias in ALIASES:
+ af = repo / alias
+ if af.is_symlink() and os.readlink(af) == "AGENTS.md":
+ continue
+ if af.exists() and not af.is_symlink():
+ print(f" ! {name}: {alias} is a real file -- fold it into AGENTS.md by hand, then rerun")
+ continue
+ af.unlink(missing_ok=True)
+ af.symlink_to("AGENTS.md") # relative: survives clone, unlike the vault symlinks
+ print(f" linked {alias} -> AGENTS.md")
+
+def main():
+ cmd = sys.argv[1] if len(sys.argv) > 1 else "list"
+ reg = registry()
+
+ if cmd == "adopt":
+ repo = Path(os.path.expanduser(sys.argv[2])).resolve()
+ name = sys.argv[3] if len(sys.argv) > 3 else repo.name
+ if name not in reg:
+ with REGISTRY.open("a") as fh:
+ fh.write(f"{name}\t{repo}\n")
+ print(f"registered {name} -> {repo}")
+ print(name)
+ sync(name, repo)
+
+ elif cmd == "sync":
+ names = sys.argv[2:] or list(reg)
+ for name in names:
+ print(name)
+ sync(name, reg[name])
+
+ elif cmd in ("list", "check"):
+ # A safeguard is not installed until something can print its coverage. Prose in
+ # AGENTS.md asserts; this counts. Exits 1 so it can gate a hook or CI.
+ problems = []
+ for name, repo in reg.items():
+ bad = []
+ if not repo.is_dir():
+ bad.append("repo missing")
+ else:
+ agents = repo / "AGENTS.md"
+ if not agents.exists() or agents.read_text() != inject(agents):
+ bad.append("AGENTS.md STALE (run sync)")
+ # the fork that actually bit us: a memory file living only in the repo
+ forked = [f for f in LINK if (repo / f).is_file() and not (repo / f).is_symlink()]
+ if forked:
+ bad.append(f"FORKED, vault cannot see: {', '.join(forked)}")
+ if not (repo / VAULT_LINK).is_symlink():
+ bad.append("no.vault/ link")
+ stale = board_stale(name)
+ if stale:
+ bad.append(stale)
+ print(f"{name:28} {'ok' if not bad else '; '.join(bad)}")
+ problems += [(name, b) for b in bad]
+
+ # A vault project with no repo cannot fork -- it's not a gap. Only an unadopted
+ # project that HAS a repo is one. ponytail: a check that cries wolf gets muted,
+ # which is the failure it exists to prevent.
+ unadopted, no_repo = [], []
+ for d in sorted(PROJECTS.iterdir()):
+ if not d.is_dir() or d.name in reg or d.name.startswith("."):
+ continue
+ (unadopted if find_repo(d.name) else no_repo).append(d.name)
+
+ print(f"\nadopted {len(reg)}/{len(reg) + len(unadopted)} vault projects that have a repo")
+ for n in unadopted:
+ print(f" UNADOPTED: {n:24} repo at {find_repo(n)} -- can fork without the vault noticing")
+ if no_repo:
+ print(f" (vault-only, cannot fork: {', '.join(no_repo)})")
+ if problems or unadopted:
+ sys.exit(1)
+
+ else:
+ sys.exit(__doc__)
+
+if __name__ == "__main__":
+ main()

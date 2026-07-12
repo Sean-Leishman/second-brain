@@ -1,6 +1,6 @@
 ---
 title: Working with Claude
-created: 2026-05-14
+created: 
 type: reference
 visibility: private
 summary: How the second-brain vault works with Claude — what Claude touches, what it doesn't, and the session workflow for compounding learnings.
@@ -40,28 +40,77 @@ The point: raw capture stays immutable and trustworthy, the wiki layer is where 
 - No silent rewrites — big edits are diffs the user can accept or reject.
 - No authoring opinions on the user's behalf — if a question needs Claude to decide what the user thinks/wants, it stops and asks.
 
-## The operations (slash commands)
+## The two layers — and why they have opposite economics
 
-| Op | Trigger | What it does |
-|----|---------|--------------|
-| **`/ingest`** | User points at a `02 Sources/` note | Integrates an already-summarised source into Base Notes; updates provenance, Index, MOC, Log; flips source `#Inbox` → `#Done`. |
-| **`/collate`** | About to write a Base Note | Read-heavy. Gathers relevant material, clusters it, proposes new/extend/split/merge. **Propose-only — no writes.** |
-| **`/draft`** | "You write it" | Claude drafts the full Base Note from collated material, every claim cited. User reviews. |
-| **`/query`** | A question against the wiki | Answers with `[[links]]`; offers to file reusable answers back; logs gaps to Open Questions. |
-| **`/digest`** | Weekly (Sun) / monthly (1st) | Observational scan of recent Daily Notes + Sources → patterns, anomalies, candidate Base Notes. |
-| **`/lint`** | On demand | Health check — contradictions, stale claims, orphans, broken links, missing cross-refs. |
-| **`/reindex`** | Monthly-ish | Wiki-wide structural pass — merges, splits, new MOCs, re-tagging, orphan adoption, decaying-confidence flags. Punch list, not a fait accompli. |
+*The single most useful thing to understand about this vault. Decided; it had been the unwritten rationale behind the Study op and the Curate default for a day before it was written down anywhere.*
 
-`/collate` and `/reindex` are **propose-only** in their first phase. Claude writes only the items the user accepts, one at a time, with diffs.
+The vault does two different jobs, and **an agent-drafted note is excellent at one and near-worthless at the other:**
+
+| | **Execution layer** | **Learning layer** |
+|---|---|---|
+| What a note is *for* | serving the board — a means to a decision | **the note *is* the output** |
+| Good agent-drafted note? | **Yes.** Read it, act, move on. The document is the point. | **No.** *The writing is the learning.* A note Claude wrote hands you a document and keeps the understanding. |
+| Default mode | Draft | **Curate** |
+| Examples | design specs, competitive analysis, project memory, strategy synthesis | anything you want to *think with* later — concepts, mental models, the things you'd want to still hold in a year |
+
+The failure this prevents, in the user's words: *"if I want to learn the note, or think about a problem, **I need to pay attention to it**."* And the diagnosis behind the whole thing: *"**I think killer is collecting too much and never visiting.**"*
+
+So the rule: **Draft mode is legitimate only in the execution layer.** Reaching for it in the learning layer produces a note nobody learned anything from — legible, plausible, and inert.
+
+## The operations
+
+| Op | Trigger | Who does what | Layer |
+|----|---------|---------------|-------|
+| **`/ingest`** | User points at a `02 Sources/` note | Claude does all of it — Base Notes, provenance, Index, MOC, Log; flips `#Inbox` → `#Done` | Bookkeeping |
+| **`/collate`** | About to write a Base Note | Claude searches **the vault**, clusters, proposes a skeleton. **Propose-only — no writes.** *You* write the note | **Learning** |
+| **`/study`** | "I want to understand X" | Claude fetches **the world** — finds sources, writes the source notes, collates a skeleton — **then stops.** *You* write the Base Note | **Learning** |
+| **`/draft`** | "You write it" / "go ahead" | Claude writes the whole note, every claim cited. You review | Execution only |
+| **`/query`** | A question against the wiki | Claude answers with `[[links]]`, logs gaps to Open Questions. You judge | Either |
+| **`/lint`** | On demand | Claude proposes a punch list. You pick | Bookkeeping |
+| **`/reindex`** | Monthly-ish | Claude proposes merges/splits/MOCs. You pick | Bookkeeping |
+| **`/digest`** | Weekly (Sun) / monthly (1st) | Claude scans, observes. You correct | *Has never once run* |
+
+**Collate searches the vault; Study fetches the world.** Both stop before the note gets written — that stop is the point, not an omission.
+
+The Study op's explicit failure condition: **if you finish a Study having read a good note instead of written a bad one, the op failed.**
+
+`/collate`, `/study`, `/lint` and `/reindex` are **propose-only** in their first phase. Claude writes only what you accept, one item at a time, with diffs.
 
 ## Curate vs Draft mode
 
-Every Base Note is authored in one of two modes — the user picks:
+Every Base Note is authored in one of two modes:
 
-- **Curate** (default for personal/reflective topics) — Claude collates and proposes structure; **user writes** in their own voice; Claude polishes, cross-links, indexes.
-- **Draft** (default for technical/synthesis-heavy, or "you write it") — Claude drafts the whole note with cited `[[links]]`; user reviews and edits.
+- **Curate** — Claude collates and proposes structure; **you write** in your own voice; Claude polishes, cross-links, indexes. **The default whenever the point is that *you* end up understanding something** — which is every personal or reflective topic, and every concept you want to think with later.
+- **Draft** — Claude writes the whole note with cited `[[links]]`; you review and edit. **For the execution layer only**, where the document is the deliverable and nobody needs to have learned anything by writing it.
 
 Triggers: "draft it" / "write the note" / "go ahead" → Draft. "collate" / "what should I include" / "I'll write it" → Curate. Unclear → ask once.
+
+> [!warning] **Where this currently stands.** Curate mode has **never been used**. Every Base Note written since the contract was adopted — thirteen of them — was agent-drafted, and **none has ever been accepted**. The queue is 11 drafts, 0 accepted, 0 rejected. That is the execution layer eating the learning layer, and it is what the split above exists to stop.
+
+## Which files are yours, and which are mine
+
+*Also decided in conversation once and never written down — the reason the vault feels overwhelming is partly that nobody ever said which pages you're supposed to read.*
+
+**Your read surfaces — these are for you:**
+
+| File | When to read it |
+|---|---|
+| **[[Current WIP]]** | **Daily.** The one page that says what to do next. If you read nothing else, read this. |
+| **[[Open Questions]]** | The research backlog. When choosing what to dig into. |
+| **[[Ventures]]** | *"When the pile feels confusing, not daily."* It answers "what is all this" — the board answers "what do I do now." |
+| **`08 Trackers/Review Queue.base`** | When judging drafts. |
+
+**My bookkeeping — you should never need to open these:**
+
+`Wiki Log` (my audit trail, so you can check and revert what I changed) · `Wiki Index` (the catalog I search) · `Wiki Map` (domain shape, regenerated on Reindex).
+
+If you find yourself reading my files to work out what's going on, that's a bug in *your* surfaces — say so, and the fix belongs in `Current WIP` or `Ventures`, not in a habit of reading the log.
+
+## Ceremony is my job, not yours
+
+Structure that taxes capture is worse than no structure — *"the point of failure isn't a messy vault, it's a vault you stop writing into."* So: templates stamp `#Unfiled` and leave `summary`, `tags`, `links`, `sources` and `Origin` deliberately blank. **I never ask you for a tag** — I guess, state the guess, and move on. Triggers: **"file this"**, **"shorten this."** Write badly and fast; the filing is mine.
+
+**`Base.md` no longer prompts for a title**. New note → start typing; there is nothing between you and the thought. Naming is filing, so it's my job: *"file this"* names an `Untitled` note, syncs the frontmatter title, fills the blanks and clears `#Unfiled`. The four templates that still prompt — `Paper`, `Books`, `Movies`, `Project` — keep it on purpose: a paper's title isn't a decision you're making, it's one you already have.
 
 ## Session workflow — how learnings compound
 
@@ -109,12 +158,12 @@ Before doing project work, Claude runs this — it's the "orient" step made expl
 2. **Plan** — for anything non-trivial, write the plan to `PLAN.md` *before* executing: goal, steps, files touched, open decisions. If the user approves a plan in-session, it lands here so a later session (or a context reset) can resume it.
 3. **Execute** — do the work. Keep `PLAN.md` ticking — check off steps, note deviations.
 4. **Log** — at the end of the session, *and before any auto-compact*, prepend (or refresh) a dated entry in `LOG.md`:
-   - `## [YYYY-MM-DD] — <session title>`
-   - **What changed** — the deltas a diff *won't* explain (the why, the surprises). Don't hand-transcribe the file-by-file change list — `git log` already has that.
-   - **Decisions** — choices made and *why* (the reasoning is the valuable part). Load-bearing ones get promoted to `DECISIONS.md` (see below).
-   - **Learnings / insights** — see below.
-   - **Open / next** — what's unfinished, what's blocked, what the next session should pick up.
-   - **Multi-idea sessions:** if the session covered more than one thread, give each its own `**Thread: <name>**` sub-block. A big tangent that won't finish now doesn't get buried in prose — it becomes an `## Open / next` item or a fresh `PLAN.md` stub, so it's resumable.
+ - `## [YYYY-MM-DD] — <session title>`
+ - **What changed** — the deltas a diff *won't* explain (the why, the surprises). Don't hand-transcribe the file-by-file change list — `git log` already has that.
+ - **Decisions** — choices made and *why* (the reasoning is the valuable part). Load-bearing ones get promoted to `DECISIONS.md` (see below).
+ - **Learnings / insights** — see below.
+ - **Open / next** — what's unfinished, what's blocked, what the next session should pick up.
+ - **Multi-idea sessions:** if the session covered more than one thread, give each its own `**Thread: <name>**` sub-block. A big tangent that won't finish now doesn't get buried in prose — it becomes an `## Open / next` item or a fresh `PLAN.md` stub, so it's resumable.
 5. **Sync `Notes.md`** — if the session changed the project's overall state or architecture, propose a diff to `Notes.md`. `LOG.md` is the history; `Notes.md` is the current truth.
 6. **Promote** — generalisable learnings get flagged for the wiki (see below). When `PLAN.md` work is fully shipped, fold its outcome into the latest `LOG.md` entry and clear the file.
 
@@ -123,8 +172,8 @@ Before doing project work, Claude runs this — it's the "orient" step made expl
 - **Saved plans** live in `PLAN.md` — never only in chat. A plan that exists only in conversation is lost on context reset. If a plan is large or multi-phase, keep phase checkboxes in `PLAN.md` so progress is visible across sessions.
 - **Session summaries** are the `LOG.md` entry itself — that *is* the summary. Write it for a reader who wasn't there: enough that next session's orientation step is just "read the log."
 - **Learnings** split two ways:
-  - **Project-specific** (a gotcha in this codebase, a config quirk, a failure mode) → stays in `LOG.md`, or graduates to `Notes.md` / a project `Failure Modes.md` if it's load-bearing. (See [[Beacon/Failure Modes]] for the pattern.)
-  - **Generalisable** — an interesting technique, a reusable approach, a non-obvious insight, *an interesting way a task got solved* — → flagged for promotion to a `05 Base Notes/` page via the Project Bridge. Claude **proposes**, doesn't auto-create — projects invent throwaway terminology that shouldn't pollute the permanent layer. During `/reindex`, terms repeated across 2+ projects with no Base Note are strong promotion candidates.
+ - **Project-specific** (a gotcha in this codebase, a config quirk, a failure mode) → stays in `LOG.md`, or graduates to `Notes.md` / a project `Failure Modes.md` if it's load-bearing. (See [[`<repo>`/Failure Modes]] for the pattern.)
+ - **Generalisable** — an interesting technique, a reusable approach, a non-obvious insight, *an interesting way a task got solved* — → flagged for promotion to a `05 Base Notes/` page via the Project Bridge. Claude **proposes**, doesn't auto-create — projects invent throwaway terminology that shouldn't pollute the permanent layer. During `/reindex`, terms repeated across 2+ projects with no Base Note are strong promotion candidates.
 - The test for "is this a wiki learning or a project log entry": *would this help on a different project?* If yes, propose it upward. If it's only true inside this repo, it stays in the project.
 
 ### Writing the log before auto-compact
@@ -147,6 +196,16 @@ Most decisions live fine as a `**Decisions**` line in a `LOG.md` entry. But a de
 - **When Claude writes one:** propose it at log-time when a session's `**Decisions**` line is clearly load-bearing — don't silently inline a major architectural call and move on. The user confirms.
 - **Superseding, not deleting:** when a later decision overturns an earlier one, mark the old record `superseded by D-NNN` (and retire its Constraint) rather than removing it. The reversal history is itself valuable.
 - **Wiki link:** if a decision rests on a concept with a Base Note, cite it. If it *establishes* a generalisable principle, that's a promotion candidate.
+
+### How the repo is wired to the vault
+
+*The mechanism, in one place. User-facing version: [[00 Vault Guide]] §Code Repos and Project Memory.*
+
+- **Memory files are canonical in `07 Projects/<name>/` and symlinked into the repo root** — `Notes.md`, `LOG.md`, `Todo.md`, `PLAN.md`, `DECISIONS.md`. The repo gitignores them. **Never write one repo-only:** a forked copy is invisible to the vault, and that is exactly how a project falsification was lost for a day.
+- **`AGENTS.md` is the repo's agent contract** — model-agnostic, git-tracked. `CLAUDE.md`, `GEMINI.md`, `.cursorrules` are relative symlinks to it, so the choice of tool is not a fork. Its top region is **generated** from `99 Templates/Project AGENTS.md`; **to change what every project tells its agent, edit the template and run `sync` — never edit the generated region in a repo.** Project-specific instructions live below the closing marker.
+- **`.vault/`** — a gitignored symlink to the vault root in every adopted repo, so an agent working in the repo can reach this page and [[Current WIP]]. Before it existed, the contract instructed a repo-side agent to promote learnings and update the board while giving it no path to either.
+- **`scripts/vault-project adopt | sync | check`** is the only supported way to wire this. `check` prints `adopted N/M`, names any forked memory file, flags a **stale board** (a project `LOG.md`/`DECISIONS.md` dated newer than its `Last:` stamp on [[Current WIP]] means a state change never reached the surface where the user acts), and **exits 1**. Rules belong in the template; **coverage belongs in the script** — replicating a rule into thirteen repos makes it thirteen times more visible and zero times more true.
+- **`adopt`/`sync` never commit.** A `git add -A` in this script once swept 457 lines of another session's real work into a commit called *"Adopt vault project scaffolding"* (`<repo>` `a2e079c`; the same mistake hid a 925-line diff under a project `8a88ff5`). **Never `git add -A` in a repo you didn't do the work in** — wire the files, let the user commit their own work with its own message.
 
 ### How projects and the wiki interop
 

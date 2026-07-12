@@ -1,0 +1,16 @@
+filters:
+  or:
+    - file.hasTag("Unfiled")
+views:
+  - type: table
+    name: Needs filing
+    filters:
+      and:
+        - file.hasTag("Unfiled")
+    order:
+      - file.name
+      - created
+      - file.folder
+    sort:
+      - property: created
+        direction: DESC

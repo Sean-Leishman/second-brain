@@ -1,28 +1,17 @@
-<%*
-let period = await tp.system.suggester(["weekly", "monthly"], ["weekly", "monthly"], false, "Digest period")
-let title
-if (period === "weekly") {
-  title = tp.date.now("GGGG-[W]WW")
-} else {
-  title = tp.date.now("YYYY-MM")
-}
-await tp.file.rename(title)
-let time = tp.date.now("YYYY-MM-DD:HH-mm")
--%>
 ---
-title: <% title %>
-created: <% time %>
+title: 2026-05
+created: 2026-05-07:00-28
 type: digest
-period: <% period %>
+period: null
 visibility: private
 tags:
   - digest
-  - <% period %>
+  - null
 cssclasses:
   - base-notes
 ---
-> [!note]+ **Digest — <% title %> (<% period %>)**
-> **Range:** <% period === "weekly" ? tp.date.now("YYYY-MM-DD", "-6d") : tp.date.now("YYYY-MM-01") %> → <% tp.date.now("YYYY-MM-DD") %>
+> [!note]+ **Digest — 2026-05 (null)**
+> **Range:** 2026-05-01 → 2026-05-07
 > **Sources scanned:** Daily Notes, new Sources, new Fleeting Notes
 > **Author:** agent draft (user reviews)
 
