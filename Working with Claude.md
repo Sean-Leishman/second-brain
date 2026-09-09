@@ -158,12 +158,12 @@ Before doing project work, Claude runs this — it's the "orient" step made expl
 2. **Plan** — for anything non-trivial, write the plan to `PLAN.md` *before* executing: goal, steps, files touched, open decisions. If the user approves a plan in-session, it lands here so a later session (or a context reset) can resume it.
 3. **Execute** — do the work. Keep `PLAN.md` ticking — check off steps, note deviations.
 4. **Log** — at the end of the session, *and before any auto-compact*, prepend (or refresh) a dated entry in `LOG.md`:
- - `## [YYYY-MM-DD] — <session title>`
- - **What changed** — the deltas a diff *won't* explain (the why, the surprises). Don't hand-transcribe the file-by-file change list — `git log` already has that.
- - **Decisions** — choices made and *why* (the reasoning is the valuable part). Load-bearing ones get promoted to `DECISIONS.md` (see below).
- - **Learnings / insights** — see below.
- - **Open / next** — what's unfinished, what's blocked, what the next session should pick up.
- - **Multi-idea sessions:** if the session covered more than one thread, give each its own `**Thread: <name>**` sub-block. A big tangent that won't finish now doesn't get buried in prose — it becomes an `## Open / next` item or a fresh `PLAN.md` stub, so it's resumable.
+   - `## [YYYY-MM-DD] — <session title>`
+   - **What changed** — the deltas a diff *won't* explain (the why, the surprises). Don't hand-transcribe the file-by-file change list — `git log` already has that.
+   - **Decisions** — choices made and *why* (the reasoning is the valuable part). Load-bearing ones get promoted to `DECISIONS.md` (see below).
+   - **Learnings / insights** — see below.
+   - **Open / next** — what's unfinished, what's blocked, what the next session should pick up.
+   - **Multi-idea sessions:** if the session covered more than one thread, give each its own `**Thread: <name>**` sub-block. A big tangent that won't finish now doesn't get buried in prose — it becomes an `## Open / next` item or a fresh `PLAN.md` stub, so it's resumable.
 5. **Sync `Notes.md`** — if the session changed the project's overall state or architecture, propose a diff to `Notes.md`. `LOG.md` is the history; `Notes.md` is the current truth.
 6. **Promote** — generalisable learnings get flagged for the wiki (see below). When `PLAN.md` work is fully shipped, fold its outcome into the latest `LOG.md` entry and clear the file.
 
@@ -172,8 +172,8 @@ Before doing project work, Claude runs this — it's the "orient" step made expl
 - **Saved plans** live in `PLAN.md` — never only in chat. A plan that exists only in conversation is lost on context reset. If a plan is large or multi-phase, keep phase checkboxes in `PLAN.md` so progress is visible across sessions.
 - **Session summaries** are the `LOG.md` entry itself — that *is* the summary. Write it for a reader who wasn't there: enough that next session's orientation step is just "read the log."
 - **Learnings** split two ways:
- - **Project-specific** (a gotcha in this codebase, a config quirk, a failure mode) → stays in `LOG.md`, or graduates to `Notes.md` / a project `Failure Modes.md` if it's load-bearing. (See [[`<repo>`/Failure Modes]] for the pattern.)
- - **Generalisable** — an interesting technique, a reusable approach, a non-obvious insight, *an interesting way a task got solved* — → flagged for promotion to a `05 Base Notes/` page via the Project Bridge. Claude **proposes**, doesn't auto-create — projects invent throwaway terminology that shouldn't pollute the permanent layer. During `/reindex`, terms repeated across 2+ projects with no Base Note are strong promotion candidates.
+  - **Project-specific** (a gotcha in this codebase, a config quirk, a failure mode) → stays in `LOG.md`, or graduates to `Notes.md` / a project `Failure Modes.md` if it's load-bearing. (See [[`<repo>`/Failure Modes]] for the pattern.)
+  - **Generalisable** — an interesting technique, a reusable approach, a non-obvious insight, *an interesting way a task got solved* — → flagged for promotion to a `05 Base Notes/` page via the Project Bridge. Claude **proposes**, doesn't auto-create — projects invent throwaway terminology that shouldn't pollute the permanent layer. During `/reindex`, terms repeated across 2+ projects with no Base Note are strong promotion candidates.
 - The test for "is this a wiki learning or a project log entry": *would this help on a different project?* If yes, propose it upward. If it's only true inside this repo, it stays in the project.
 
 ### Writing the log before auto-compact

@@ -3,7 +3,7 @@ title: Vault Guide
 created: 
 type: guide
 cssclasses:
- - center-images
+  - center-images
 ---
 Workflows for this Obsidian vault. Covers the Zettelkasten pipeline, task management, Telegram bot routing, and how digital and analogue systems fit together.
 
@@ -138,7 +138,7 @@ Notes flow through four stages. Each stage has a folder.
 Capture ──▶ Process ──▶ Connect ──▶ Index
 
 01 Fleeting 02 Sources 05 Base 04 Indexes
- Notes (literature) Notes (MOCs)
+  Notes (literature) Notes (MOCs)
 ```
 
 ### Stage 1: Fleeting Notes (`01 Fleeting Notes/`)
@@ -207,27 +207,27 @@ Fleeting notes are temporary. The core pattern: **read → decide → create/mer
 
 ```
 Is it about a specific source (paper/video/book)?
- YES → 02 Sources/
- NO ↓
+  YES → 02 Sources/
+  NO ↓
 
 Is it a self-contained concept you can explain standalone?
- YES → 05 Base Notes/ (new or merge into existing)
- NO ↓
+  YES → 05 Base Notes/ (new or merge into existing)
+  NO ↓
 
 Is it research/work for a specific project?
- YES → 07 Projects/<name>/Notes.md
- NO ↓
+  YES → 07 Projects/<name>/Notes.md
+  NO ↓
 
 Is it a todo or action item?
- YES → 08 Trackers/Inbox.md
- NO ↓
+  YES → 08 Trackers/Inbox.md
+  NO ↓
 
 Is it multiple things mixed together?
- YES → Split and route each piece above
- NO ↓
+  YES → Split and route each piece above
+  NO ↓
 
 Is it junk?
- YES → Delete
+  YES → Delete
 ```
 
 **Fleeting → Base Note (new concept):**
@@ -430,10 +430,10 @@ Pages 9-10: YEARLY GOALS + IDENTITY STATEMENT
 Pages 11-12: QUARTERLY GOALS
 
 Then flowing pages:
- → Monthly Log (calendar + task list)
- → Daily entries (3 intentions, habit row, evening log)
- → Collections as needed (e.g., "flat hunting", "gift ideas")
- → Next Monthly Log...
+  → Monthly Log (calendar + task list)
+  → Daily entries (3 intentions, habit row, evening log)
+  → Collections as needed (e.g., "flat hunting", "gift ideas")
+  → Next Monthly Log...
 ```
 
 **Index example:**

@@ -135,15 +135,15 @@ Wiki-wide structural pass. Triggered on demand (e.g. monthly, or when the wiki f
 1. **Scan** all `05 Base Notes/` and `04 Indexes/`. Optionally include `02 Sources/` if asked.
 2. **Cluster** by topic — group notes that share concepts, citations, or tags. Surface unexpected clusters (notes that should be linked but aren't).
 3. **Propose:**
- - **New MOC pages** when a cluster has 3+ Base Notes and no existing index page.
- - **Merge candidates** — pairs of Base Notes that have drifted into covering the same concept. Show overlap and suggest which to keep as canonical.
- - **Split candidates** — single Base Notes that now cover two distinct ideas (length, multiple unrelated sections, divergent inbound links).
- - **Re-tagging** — notes whose tags don't match their actual content, or missing tags.
- - **Index updates** — `04 Indexes/Wiki Index.md` entries to add, remove, or rewrite.
- - **Map updates** — `04 Indexes/Wiki Map.md` regenerated to reflect current domain shape, density, and gaps.
- - **Orphan adoption** — notes with no inbound links that belong in an existing MOC.
- - **Decaying confidence** — personal Base Notes with no reinforcing signal in 8+ weeks flagged for refresh.
- - **Cross-project promotions** — concepts repeated across 2+ projects in `07 Projects/` with no Base Note (see *Project ↔ Wiki Bridge*).
+   - **New MOC pages** when a cluster has 3+ Base Notes and no existing index page.
+   - **Merge candidates** — pairs of Base Notes that have drifted into covering the same concept. Show overlap and suggest which to keep as canonical.
+   - **Split candidates** — single Base Notes that now cover two distinct ideas (length, multiple unrelated sections, divergent inbound links).
+   - **Re-tagging** — notes whose tags don't match their actual content, or missing tags.
+   - **Index updates** — `04 Indexes/Wiki Index.md` entries to add, remove, or rewrite.
+   - **Map updates** — `04 Indexes/Wiki Map.md` regenerated to reflect current domain shape, density, and gaps.
+   - **Orphan adoption** — notes with no inbound links that belong in an existing MOC.
+   - **Decaying confidence** — personal Base Notes with no reinforcing signal in 8+ weeks flagged for refresh.
+   - **Cross-project promotions** — concepts repeated across 2+ projects in `07 Projects/` with no Base Note (see *Project ↔ Wiki Bridge*).
 4. **Output a punch list**, not a fait accompli. Each suggestion: *what*, *why*, *which files*, *Curate or Draft mode if action involves authoring*.
 5. User picks which to act on. Agent executes only the accepted items, one at a time, with diffs.
 6. Append a `reindex` entry to `Wiki Log.md` summarising what was proposed and what was accepted.
