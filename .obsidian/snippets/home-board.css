@@ -1,0 +1,9 @@
+/* Home.md: [!board] callout lays its child callouts out as kanban columns */
+.home { --file-line-width: 100%; }
+.callout[data-callout="board"] { background: none; border: none; padding: 0; }
+.callout[data-callout="board"] > .callout-title { display: none; }
+.callout[data-callout="board"] > .callout-content { display: flex; gap: .75rem; align-items: flex-start; overflow-x: auto; }
+.callout[data-callout="board"] > .callout-content > .callout { flex: 1 0 240px; margin: 0; max-height: 75vh; overflow-y: auto; }
+.callout[data-callout="inbox"]    { --callout-color: var(--color-blue-rgb);   --callout-icon: lucide-inbox; }
+.callout[data-callout="deadline"] { --callout-color: var(--color-red-rgb);    --callout-icon: lucide-calendar-clock; }
+.callout[data-callout="someday"]  { --callout-color: var(--color-purple-rgb); --callout-icon: lucide-archive; }
