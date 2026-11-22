@@ -7,19 +7,20 @@ A template Obsidian vault implementing [Karpathy's LLM Wiki pattern](https://gis
 ## What's in this template
 
 - **`CLAUDE.md`** — schema doc that defines how an LLM agent operates inside this vault. Roles, three layers (raw / wiki / schema), operations (Ingest, Collate, Draft, Query, Lint, Reindex, Digest), conventions (provenance, confidence, frontmatter).
-- **`.claude/commands/`** — 7 slash commands (`/ingest`, `/collate`, `/draft`, `/query`, `/lint`, `/reindex`, `/digest`) wired to the operations defined in `CLAUDE.md`. Use with [Claude Code](https://claude.com/claude-code) or any compatible agent harness.
+- **Operations, not commands.** `CLAUDE.md` defines the operations (ingest, collate, draft, query, lint, reindex, digest) in plain language, so any agent that reads it can run them. Slash-command wrappers are not included; ask for an operation by name, or write your own commands for [Claude Code](https://claude.com/claude-code).
 - **`99 Templates/`** — Obsidian Templater files for Base, Paper, Books, Movies, Daily, Project, Digest, and Zotero.
 - **`04 Indexes/`** — seeded with `Wiki Index.md`, `Wiki Map.md`, `Wiki Log.md`, and `Open Questions.md` — the navigation surface the agent maintains.
 - **`08 Trackers/`** — empty skeletons for Inbox, This Week, Deadlines, Recurring, Someday, Goals, and consumption lists (To Be Read/Watched/Listened/Eaten).
+- **`Home.md`** — the start page (opens on launch). A kanban-style board whose columns are live Dataview views of This Week, Inbox, Deadlines and Someday. See *Workflows at a glance → The Home board* in the Vault Guide.
 - **`00 Vault Guide.md`** — long-form workflow guide (Zettelkasten pipeline, task management, capture flows, paper reading, daily notes).
 
 ## Quick start
 
 1. Click **Use this template** on GitHub to create your own copy.
 2. Clone locally and open the folder as an Obsidian vault.
-3. Install Templater (point template folder at `99 Templates/`).
+3. Enable the community plugins **Templater** (template folder `99 Templates/`), **Dataview** and **Homepage**, and turn on the `home-board` CSS snippet. The vault opens on the `Home.md` board.
 4. Open the vault in Claude Code (or your preferred agent harness): `cd <vault> && claude`.
-5. Try `/lint` to confirm the agent picks up `CLAUDE.md`.
+5. Ask it to *lint the vault* to confirm it picks up `CLAUDE.md`.
 6. Edit `CLAUDE.md` to taste. The schema is meant to co-evolve.
 
 ## How the LLM-Wiki layer maps onto the Zettelkasten foundation
@@ -304,7 +305,8 @@ Links to connected knowledge areas
    - Templator (advanced templating)
    - Web Clipper (content capture)
    - Zotero Integration (academic research)
-   - Dataview (dynamic content)
+   - Dataview (dynamic content; powers the `Home.md` board)
+   - Homepage (opens `Home.md` on startup)
    - Tag Wrangler (tag management)
 
 ### Initial Configuration

@@ -78,6 +78,34 @@ Agent-side detail: [[Working with Claude]].
 
 ---
 
+## Workflows at a glance
+
+Every workflow in the vault, what runs it, and where its output lands. **Machines run on a schedule; anything that needs you on a schedule should hang off one recurring touchpoint (the Sunday review), not a new workflow.** Keep a measured status next to each row in your own copy. Re-count it, don't assert it: a status nobody re-measures goes stale.
+
+| Workflow | Runs how | Output |
+|---|---|---|
+| **Home board** | [[Home]] opens on startup (Homepage plugin) | Kanban-style columns that are live Dataview views of the trackers. Ticking a card ticks the task in its tracker file |
+| **Capture** | Telegram bot (or any quick-capture tool) | links → `02 Sources/`, todos → `08 Trackers/Inbox.md`, plain text → daily note |
+| **Tasks + Sunday review** | you, weekly | Inbox → This Week / Deadlines / Someday (see *Task Management*) |
+| **Project memory** | `scripts/vault-project`, [[Current WIP]] | `LOG` / `DECISIONS` per repo, symlinked into `07 Projects/` |
+| **Wiki ops**: ingest, query, collate, draft, lint, reindex, digest | Claude, on request | `04 Indexes/`, proposed Base Notes in `05 Base Notes/` |
+| **Zettelkasten**: fleeting → base | you, within days | `01` → `05` (see *Zettelkasten Pipeline*) |
+| **Digests** | weekly / monthly | `04 Indexes/Digests/` |
+| **Paper reading** | To Be Read → reading → source → index | `02 Sources/`, topic MOCs |
+| **Analogue**: journal, pocket jot | paper | triaged into Inbox at the Sunday review |
+
+**Separated by:** who may write (raw `01`/`02`/`06` are read-only for Claude; wiki `04`/`05` are Claude-maintained, Base Notes proposed) · what a note is for (execution = Claude drafts; learning = you write) · task horizon (Inbox / This Week / Deadlines / Someday) · human vs machine.
+
+### The Home board
+
+`Home.md` shows four columns: **This Week · Inbox · Deadlines · Someday**. Each column is a Dataview `TASK` query over one tracker file, so **the board is a view, not a store**. Tasks stay in their tracker files, and anything that writes to those files (you, a bot, Claude) shows up on the board. The layout comes from `.obsidian/snippets/home-board.css`, which turns a `[!board]` callout into side-by-side columns.
+
+- **Needs:** the Dataview and Homepage plugins enabled, and the `home-board` CSS snippet on (Settings → Appearance → CSS snippets).
+- **Move a task:** cut and paste the line into the other tracker file. You can't drag cards, because that needs the Kanban plugin and its single-file format.
+- **Add a column:** copy one of the nested `> > [!...]` blocks in `Home.md` and change the `FROM` path.
+
+---
+
 ## Vault Structure
 
 | Folder | Purpose |
