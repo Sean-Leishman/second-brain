@@ -77,6 +77,11 @@ def board_stale(name: str):
         body = re.sub(r"\A---.*?\n---\n", "", text, flags=re.S) # frontmatter `created:` is not an event
         body = re.sub(r"<!--.*?-->", "", body, flags=re.S) # nor is the template's commented-out example
         dates += re.findall(r"\d{4}-\d{2}-\d{2}", body)
+    # A date after today is a deadline or a plan ("GW6's deadline is "), not an event.
+    # Counting it made the check fail until that day, fixable only by stamping the board with
+    # a future date -- found on another project.
+    today = datetime.date.today().isoformat()
+    dates = [d for d in dates if d <= today]
     if not dates:
         return None
     newest = max(dates)

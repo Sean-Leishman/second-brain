@@ -8,9 +8,25 @@ A conversation is a raw source like any other: the user's turns verbatim (their 
 never paraphrased) plus the agent's substantive replies. Decisions made in chat and never
 written down are the vault's biggest leak -- this is the tap.
 """
-import json, os, sys, glob, datetime, pathlib
+import json, os, re, sys, glob, datetime, pathlib
 
 ROOT = os.path.expanduser("~/.claude/projects")
+
+# "Verbatim" stops at secrets. A user pasting a key into chat must not have it copied into
+# 02 Sources/Conversations/, which is git-synced. Found when a Gemini key was pasted
+# into a session this very script would later ingest. Patterns are the formats that have
+# actually appeared here; add one when a new provider shows up.
+SECRETS = re.compile(
+    r"AIza[0-9A-Za-z_\-]{35}" # Google / Gemini
+    r"|sk-ant-[0-9A-Za-z_\-]{20,}" # Anthropic
+    r"|sk-(?:proj-)?[0-9A-Za-z_\-]{20,}" # OpenAI
+    r"|gsk_[0-9A-Za-z]{20,}" # Groq
+    r"|ghp_[0-9A-Za-z]{30,}|github_pat_[0-9A-Za-z_]{30,}"
+    r"|\b\d{8,10}:[0-9A-Za-z_\-]{35}\b" # Telegram bot token
+)
+
+def redact(text):
+    return SECRETS.sub("[REDACTED SECRET]", text)
 
 def turns(path):
     for line in open(path):
@@ -22,7 +38,7 @@ def turns(path):
         t = c if isinstance(c, str) else "".join(
             x.get("text", "") for x in c if isinstance(x, dict) and x.get("type") == "text"
         ) if isinstance(c, list) else ""
-        t = t.strip()
+        t = redact(t.strip())
         # hook noise, tool results and slash-command wrappers aren't conversation
         if not t or t.startswith(("<", "[Request", "Caveat", "Base directory")):
             continue

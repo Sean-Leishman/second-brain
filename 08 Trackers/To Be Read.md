@@ -1,10 +1,11 @@
 ---
 title: To Be Read
 created: 2026-05-06
-visibility: private
-tags:
-  - tracker
+type: tracker
+cssclasses:
+  - center-images
+  - status-tag
+  - base-notes
 ---
-
 # To Be Read
 

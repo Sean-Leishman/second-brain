@@ -26,6 +26,8 @@ For *vault structure, folder purposes, Zettelkasten pipeline, and capture workfl
 
 When the user says "draft it" / "write the note" / "go ahead" → Draft mode. When they say "collate" / "what should I include" / "I'll write it" → Curate mode. When unclear, ask once: *"Draft or curate?"*
 
+> [!warning] **Unprompted Draft mode is paused (user's call).** While `08 Trackers/Review Queue.base` → *Awaiting verdict* holds **more than 10** `#Draft` Base Notes (43 once, 0 ever accepted), the agent **does not start a Draft-mode Base Note on its own initiative** — including the "propose and draft in the same pass" habit at session end. It writes a one-line *candidate* in the session's LOG / Wiki Log instead. An explicit "draft it" from the user for that note still overrides. *Why:* more drafts only grow a queue nobody is reading; the learning layer's failure mode is a library you didn't read. Lift when the queue is ≤ 10 — re-count, don't assume.
+
 In either mode: the user's authored content stays in their voice; agent edits are diffs the user can accept or reject. Personal facts about the user default to Curate mode unless explicitly told otherwise — the user's self-portrait should be in their own words.
 
 If a question would require the agent to *decide what the user thinks/wants/believes*, stop and ask. The agent does not author opinions on the user's behalf.
@@ -184,7 +186,7 @@ This is a sub-domain of the wiki, not a separate vault.
 **Personal Index:** maintain a section in `04 Indexes/Wiki Index.md` listing all `tag: personal` Base Notes with one-line summaries. Treat it as a self-portrait that compounds.
 
 **Digests:**
-- **Weekly digest** (Sunday): scan the past 7 Daily Notes + new Sources. Output to `04 Indexes/Digests/<YYYY-WW>.md`. Sections: *patterns*, *anomalies*, *commitments made*, *contradictions with prior personal facts*, *candidate Base Notes*. Draft only — user reads and corrects.
+- **Weekly digest** (Sunday): scan the past 7 Daily Notes + new Sources. Output to `04 Indexes/Digests/<YYYY>-W<WW>.md` (ISO week, e.g. `2026-W46` — the `W` keeps week 11 from colliding with the November monthly `2026-11.md`; a week belongs to the month its Sunday falls in). *Written automatically by the Telegram bot since, Sunday from 18:00; `/digest` mid-week previews without saving.* Sections: *patterns*, *anomalies*, *commitments made*, *contradictions with prior personal facts*, *candidate Base Notes*. Draft only — user reads and corrects.
 - **Monthly digest** (1st of month): synthesise weekly digests for the prior month. Same format, longer horizon.
 
 Digests are wiki layer (agent-writable). The Daily Notes they're built from are raw (untouchable).

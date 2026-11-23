@@ -151,6 +151,7 @@ Before doing project work, Claude runs this — it's the "orient" step made expl
 - [ ] Check `## Open / next` in the latest `LOG.md` entry — that's the intended starting point.
 - [ ] Cross-check load-bearing concepts against `05 Base Notes/` — link what exists, note what should.
 - [ ] Confirm the session's goal with the user if `PLAN.md` and the user's ask disagree.
+- [ ] **Before picking up a `Todo.md` item, check [[Current WIP]] for it** — especially one naming another tool or project. A project's Todo can lag work that moved to a split-off project; once `obsidian_helper` re-evaluated `houser-oss`, already done under `doorstep`. Same family as [[A Correct Derivation Spends the Lookup — Being Right Is Why You Don't Check]].
 
 ### Session workflow for projects
 
@@ -239,6 +240,7 @@ The Notes/LOG/PLAN mechanics above are *this vault's* convention. The principles
 - **Confirm before irreversible or outward-facing actions.** Deleting/overwriting files you didn't create, pushing, publishing, anything hard to undo — confirm first unless explicitly told to proceed. Approval for one such action doesn't carry to the next. Before deleting or overwriting, look at the target: if it contradicts how it was described, surface that instead of proceeding.
 - **The why is the durable part.** When recording a decision, the reasoning (what was rejected and why) outlives the decision itself. A choice without its rationale gets re-litigated; a choice with it can be confidently kept or overturned. Supersede, don't delete.
 - **Don't let project work become a knowledge leak.** A learning that would help on a *different* project belongs in the wiki, not trapped in the project folder. The promotion test — "would this help elsewhere?" — applies to every non-obvious thing learned, not just code.
+- **Don't test something that can cut the agent's own connection from the agent's own machine.** Exit nodes, VPNs, firewall and DNS changes: if it fails, the session running the test goes down with it and records nothing. Run the change on a second device (phone, other laptop) and have the agent observe from a machine that stays up. Before trusting any "after" check, confirm the change actually applied, because a `sudo` that the agent can't answer fails silently from the agent's side. *(homelab LOG,.)*
 - **Surface contradictions, don't paper over them.** If new work conflicts with a prior decision, a Base Note, or what the user just said, flag it. The trust rule applies: a current statement beats a stale recorded fact, but the conflict gets named, not silently resolved.
 
 ## Personal tracking
