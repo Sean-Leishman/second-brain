@@ -1,0 +1,158 @@
+body {
+  --font-text-theme: "Iosevka Nerd Font", monospace;
+  --font-interface-theme: "Iosevka Nerd Font", monospace;
+  --font-monospace-theme: "Iosevka Nerd Font", monospace;
+  --h1-font: "Iosevka Nerd Font", monospace;
+  --h2-font: "Iosevka Nerd Font", monospace;
+  --h3-font: "Iosevka Nerd Font", monospace;
+  --h4-font: "Iosevka Nerd Font", monospace;
+  --h5-font: "Iosevka Nerd Font", monospace;
+  --h6-font: "Iosevka Nerd Font", monospace;
+  --h1-weight: 600;
+  --h2-weight: 600;
+  --h3-weight: 600;
+}
+
+.theme-light {
+  --background-primary: #fcfcfb;
+  --background-primary-alt: #f2f4f6;
+  --background-secondary: #e7e9ed;
+  --background-secondary-alt: #dfe3e8;
+  --background-modifier-border: #d8dce2;
+  --background-modifier-border-hover: #b8c0ca;
+  --background-modifier-border-focus: #2458c6;
+  --background-modifier-form-field: #ffffff;
+  --background-modifier-cover: rgba(17, 19, 21, 0.5);
+
+  --text-normal: #242629;
+  --text-muted: #6f747b;
+  --text-faint: #9299a2;
+  --text-on-accent: #ffffff;
+  --text-accent: #2458c6;
+  --text-accent-hover: #173f91;
+  --text-selection: rgba(36, 88, 198, 0.18);
+  --text-highlight-bg: #f0dfad;
+
+  --color-accent: #2458c6;
+  --color-accent-1: #173f91;
+  --color-accent-2: #4c75d2;
+  --interactive-normal: #e7e9ed;
+  --interactive-hover: #dfe3e8;
+  --interactive-accent: #2458c6;
+  --interactive-accent-hover: #173f91;
+
+  --link-color: #2458c6;
+  --link-color-hover: #173f91;
+  --link-external-color: #2458c6;
+  --link-external-color-hover: #173f91;
+  --link-unresolved-color: #7459b8;
+  --link-unresolved-opacity: 1;
+
+  --h1-color: #242629;
+  --h2-color: #242629;
+  --h3-color: #242629;
+  --h4-color: #242629;
+  --h5-color: #242629;
+  --h6-color: #242629;
+  --code-normal: #242629;
+  --code-background: #edf0f3;
+  --code-comment: #6f747b;
+  --code-function: #2458c6;
+  --code-keyword: #7459b8;
+  --code-property: #237a83;
+  --code-string: #527a35;
+  --code-value: #97622c;
+
+  --tag-color: #2458c6;
+  --tag-color-hover: #173f91;
+  --tag-background: #e8eef9;
+  --tag-background-hover: #d7e3f6;
+  --blockquote-border-color: #2458c6;
+  --hr-color: #d8dce2;
+  --list-marker-color: #6f747b;
+  --checkbox-color: #2458c6;
+  --checkbox-border-color: #9299a2;
+
+  --nav-item-color: #6f747b;
+  --nav-item-color-hover: #242629;
+  --nav-item-color-active: #2458c6;
+  --nav-item-background-hover: #dfe3e8;
+  --nav-item-background-active: #e8eef9;
+  --ribbon-background: #e7e9ed;
+  --status-bar-background: #e7e9ed;
+  --status-bar-text-color: #6f747b;
+  --modal-background: #fcfcfb;
+  --modal-border-color: #d8dce2;
+}
+
+.theme-dark {
+  --background-primary: #191b1e;
+  --background-primary-alt: #22262b;
+  --background-secondary: #111315;
+  --background-secondary-alt: #252a30;
+  --background-modifier-border: #363c43;
+  --background-modifier-border-hover: #505a65;
+  --background-modifier-border-focus: #8ab0ff;
+  --background-modifier-form-field: #1c1f22;
+  --background-modifier-cover: rgba(8, 10, 12, 0.75);
+
+  --text-normal: #e6e8eb;
+  --text-muted: #a4abb3;
+  --text-faint: #68717b;
+  --text-on-accent: #111315;
+  --text-accent: #8ab0ff;
+  --text-accent-hover: #b2caff;
+  --text-selection: rgba(138, 176, 255, 0.25);
+  --text-highlight-bg: #554d30;
+
+  --color-accent: #8ab0ff;
+  --color-accent-1: #b2caff;
+  --color-accent-2: #4c75d2;
+  --interactive-normal: #1c1f22;
+  --interactive-hover: #252a30;
+  --interactive-accent: #8ab0ff;
+  --interactive-accent-hover: #b2caff;
+
+  --link-color: #8ab0ff;
+  --link-color-hover: #b2caff;
+  --link-external-color: #8ab0ff;
+  --link-external-color-hover: #b2caff;
+  --link-unresolved-color: #b6a2e1;
+  --link-unresolved-opacity: 1;
+
+  --h1-color: #e6e8eb;
+  --h2-color: #e6e8eb;
+  --h3-color: #e6e8eb;
+  --h4-color: #e6e8eb;
+  --h5-color: #e6e8eb;
+  --h6-color: #e6e8eb;
+  --code-normal: #e6e8eb;
+  --code-background: #252a30;
+  --code-comment: #a4abb3;
+  --code-function: #8ab0ff;
+  --code-keyword: #b6a2e1;
+  --code-property: #75c1c9;
+  --code-string: #aac584;
+  --code-value: #d6a471;
+
+  --tag-color: #8ab0ff;
+  --tag-color-hover: #b2caff;
+  --tag-background: #253246;
+  --tag-background-hover: #30415b;
+  --blockquote-border-color: #8ab0ff;
+  --hr-color: #363c43;
+  --list-marker-color: #a4abb3;
+  --checkbox-color: #8ab0ff;
+  --checkbox-border-color: #505a65;
+
+  --nav-item-color: #a4abb3;
+  --nav-item-color-hover: #e6e8eb;
+  --nav-item-color-active: #8ab0ff;
+  --nav-item-background-hover: #252a30;
+  --nav-item-background-active: #253246;
+  --ribbon-background: #111315;
+  --status-bar-background: #111315;
+  --status-bar-text-color: #a4abb3;
+  --modal-background: #191b1e;
+  --modal-border-color: #363c43;
+}

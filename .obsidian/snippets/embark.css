@@ -480,3 +480,57 @@
   margin-bottom: 1.25em;
   padding: 0.75em 1em;
 }
+
+/* Collapse blank lines immediately after headings in edit mode */
+.theme-dark .cm-content [class*="HyperMD-header"] + .cm-line:has(> br:only-child) {
+  line-height: 0.2;
+  font-size: 2px;
+}
+
+/* Gap when a heading directly follows content (no blank line) */
+.theme-dark .cm-content .cm-line:not([class*="HyperMD-header"]) + .cm-line[class*="HyperMD-header"] {
+  margin-top: 0.8em !important;
+}
+
+/* Tighter gap when a heading directly follows a list item (no blank line) */
+.theme-dark .cm-content .cm-line[class*="HyperMD-list-line"] + .cm-line[class*="HyperMD-header"] {
+  margin-top: 0.6em !important;
+  padding-top: 0 !important;
+}
+
+/* Gap between heading and the content that follows it */
+.theme-dark .cm-content .cm-line[class*="HyperMD-header"] + .cm-line:not(:has(> br:only-child)) {
+  padding-top: 0.6em;
+}
+
+/* Collapse blank lines between list items in edit mode */
+.theme-dark .cm-content .cm-line[class*="HyperMD-list-line"] + .cm-line:has(> br:only-child) {
+  line-height: 0 !important;
+  font-size: 0 !important;
+  height: 0 !important;
+  overflow: hidden;
+}
+
+/* Remove top margin on heading that follows a blank line after a list item */
+.theme-dark .cm-content .cm-line[class*="HyperMD-list-line"] + .cm-line:has(> br:only-child) + .cm-line[class*="HyperMD-header"] {
+  margin-top: 0.6em !important;
+  padding-top: 0 !important;
+}
+
+/* Collapse blank line after frontmatter closing --- in edit mode */
+.theme-dark .cm-content .cm-line:has(.cm-def.cm-hmd-frontmatter) + .cm-line:has(> br:only-child),
+.theme-dark .cm-content .cm-line.HyperMD-yaml-end + .cm-line:has(> br:only-child) {
+  line-height: 0.2;
+  font-size: 2px;
+}
+
+/* Ensure properties block is expanded/visible by default in live preview */
+.theme-dark .metadata-container {
+  display: block !important;
+}
+.theme-dark .metadata-container.is-collapsed {
+  display: block !important;
+}
+.theme-dark .metadata-content {
+  display: block !important;
+}

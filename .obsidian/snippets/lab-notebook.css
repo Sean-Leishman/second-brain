@@ -1,0 +1,155 @@
+body {
+  --font-text-theme: "Noto Sans", sans-serif;
+  --font-interface-theme: "Noto Sans", sans-serif;
+  --font-monospace-theme: "Iosevka Nerd Font", monospace;
+  --h1-font: "Iosevka Nerd Font", monospace;
+  --h2-font: "Iosevka Nerd Font", monospace;
+  --h3-font: "Iosevka Nerd Font", monospace;
+  --h4-font: "Iosevka Nerd Font", monospace;
+  --h5-font: "Iosevka Nerd Font", monospace;
+  --h6-font: "Iosevka Nerd Font", monospace;
+}
+
+.theme-light {
+  --background-primary: #f5f7f1;
+  --background-primary-alt: #edf2ea;
+  --background-secondary: #e5eae5;
+  --background-secondary-alt: #dfe7e0;
+  --background-modifier-border: #cbd6ce;
+  --background-modifier-border-hover: #a8b9ad;
+  --background-modifier-border-focus: #36785a;
+  --background-modifier-form-field: #fbfcf8;
+  --background-modifier-cover: rgba(20, 26, 22, 0.55);
+
+  --text-normal: #28352f;
+  --text-muted: #6d7c73;
+  --text-faint: #91a096;
+  --text-on-accent: #fbfcf8;
+  --text-accent: #36785a;
+  --text-accent-hover: #245c43;
+  --text-selection: rgba(54, 120, 90, 0.2);
+  --text-highlight-bg: #e6d89e;
+
+  --color-accent: #36785a;
+  --color-accent-1: #245c43;
+  --color-accent-2: #579173;
+  --interactive-normal: #e5eae5;
+  --interactive-hover: #dfe7e0;
+  --interactive-accent: #36785a;
+  --interactive-accent-hover: #245c43;
+
+  --link-color: #36785a;
+  --link-color-hover: #245c43;
+  --link-external-color: #2b6f8a;
+  --link-external-color-hover: #245c6f;
+  --link-unresolved-color: #7b6ba8;
+  --link-unresolved-opacity: 1;
+
+  --h1-color: #28352f;
+  --h2-color: #28352f;
+  --h3-color: #28352f;
+  --h4-color: #28352f;
+  --h5-color: #28352f;
+  --h6-color: #28352f;
+  --code-normal: #28352f;
+  --code-background: #e8eee7;
+  --code-comment: #6d7c73;
+  --code-function: #2b6f8a;
+  --code-keyword: #7b6ba8;
+  --code-property: #36785a;
+  --code-string: #6c7e35;
+  --code-value: #9b6a32;
+
+  --tag-color: #36785a;
+  --tag-color-hover: #245c43;
+  --tag-background: #e1ece3;
+  --tag-background-hover: #d2e3d6;
+  --blockquote-border-color: #36785a;
+  --hr-color: #cbd6ce;
+  --list-marker-color: #6d7c73;
+  --checkbox-color: #36785a;
+  --checkbox-border-color: #91a096;
+
+  --nav-item-color: #6d7c73;
+  --nav-item-color-hover: #28352f;
+  --nav-item-color-active: #36785a;
+  --nav-item-background-hover: #dfe7e0;
+  --nav-item-background-active: #d2e3d6;
+  --ribbon-background: #e5eae5;
+  --status-bar-background: #e5eae5;
+  --status-bar-text-color: #6d7c73;
+  --modal-background: #f5f7f1;
+  --modal-border-color: #cbd6ce;
+}
+
+.theme-dark {
+  --background-primary: #1b241e;
+  --background-primary-alt: #202a23;
+  --background-secondary: #141a16;
+  --background-secondary-alt: #253129;
+  --background-modifier-border: #3c4b41;
+  --background-modifier-border-hover: #566a5c;
+  --background-modifier-border-focus: #7ac69b;
+  --background-modifier-form-field: #202a23;
+  --background-modifier-cover: rgba(10, 14, 11, 0.75);
+
+  --text-normal: #e1e9df;
+  --text-muted: #9caea1;
+  --text-faint: #65766a;
+  --text-on-accent: #141a16;
+  --text-accent: #7ac69b;
+  --text-accent-hover: #a2dbb8;
+  --text-selection: rgba(122, 198, 155, 0.24);
+  --text-highlight-bg: #514d2d;
+
+  --color-accent: #7ac69b;
+  --color-accent-1: #a2dbb8;
+  --color-accent-2: #579173;
+  --interactive-normal: #202a23;
+  --interactive-hover: #253129;
+  --interactive-accent: #7ac69b;
+  --interactive-accent-hover: #a2dbb8;
+
+  --link-color: #7ac69b;
+  --link-color-hover: #a2dbb8;
+  --link-external-color: #82b7c9;
+  --link-external-color-hover: #a4ccda;
+  --link-unresolved-color: #b1a2d5;
+  --link-unresolved-opacity: 1;
+
+  --h1-color: #e1e9df;
+  --h2-color: #e1e9df;
+  --h3-color: #e1e9df;
+  --h4-color: #e1e9df;
+  --h5-color: #e1e9df;
+  --h6-color: #e1e9df;
+  --code-normal: #e1e9df;
+  --code-background: #253129;
+  --code-comment: #9caea1;
+  --code-function: #82b7c9;
+  --code-keyword: #b1a2d5;
+  --code-property: #7ac69b;
+  --code-string: #b5c779;
+  --code-value: #d3a46c;
+
+  --tag-color: #7ac69b;
+  --tag-color-hover: #a2dbb8;
+  --tag-background: #293b30;
+  --tag-background-hover: #344b3b;
+  --blockquote-border-color: #7ac69b;
+  --hr-color: #3c4b41;
+  --list-marker-color: #9caea1;
+  --checkbox-color: #7ac69b;
+  --checkbox-border-color: #566a5c;
+
+  --nav-item-color: #9caea1;
+  --nav-item-color-hover: #e1e9df;
+  --nav-item-color-active: #7ac69b;
+  --nav-item-background-hover: #253129;
+  --nav-item-background-active: #293b30;
+  --ribbon-background: #141a16;
+  --status-bar-background: #141a16;
+  --status-bar-text-color: #9caea1;
+  --modal-background: #1b241e;
+  --modal-border-color: #3c4b41;
+}

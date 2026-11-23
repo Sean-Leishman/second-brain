@@ -1,0 +1,42 @@
+:root {
+  --nav-item-weight-hover: 500;
+}
+
+.nav-file-title,
+.nav-folder-title {
+  border-radius: 3px;
+}
+
+.nav-folder:has(.nav-folder-title[data-path^="00"]) { --folder-accent: var(--code-string, var(--text-accent)); }
+.nav-folder:has(.nav-folder-title[data-path^="01"]) { --folder-accent: var(--code-property, var(--text-accent)); }
+.nav-folder:has(.nav-folder-title[data-path^="02"]) { --folder-accent: var(--code-function, var(--text-accent)); }
+.nav-folder:has(.nav-folder-title[data-path^="03"]) { --folder-accent: var(--color-accent-2, var(--text-accent)); }
+.nav-folder:has(.nav-folder-title[data-path^="04"]) { --folder-accent: var(--color-accent, var(--text-accent)); }
+.nav-folder:has(.nav-folder-title[data-path^="05"]) { --folder-accent: var(--link-unresolved-color, var(--text-accent)); }
+.nav-folder:has(.nav-folder-title[data-path^="06"]) { --folder-accent: var(--text-accent); }
+.nav-folder:has(.nav-folder-title[data-path^="07"]) { --folder-accent: var(--code-value, var(--text-accent)); }
+.nav-folder:has(.nav-folder-title[data-path^="99"]) { --folder-accent: var(--text-faint); }
+
+.nav-folder-title[data-path] {
+  color: color-mix(in srgb, var(--folder-accent, var(--text-muted)) 55%, var(--text-muted));
+  --nav-item-background-hover: color-mix(in srgb, var(--folder-accent, var(--text-muted)) 10%, transparent);
+  --nav-collapse-icon-color: color-mix(in srgb, var(--folder-accent, var(--text-muted)) 48%, var(--text-faint));
+}
+
+.nav-folder-title[data-path]:hover {
+  --nav-collapse-icon-color: var(--folder-accent, var(--text-muted));
+}
+
+.tree-item-children .nav-folder:has(.nav-folder-title[data-path]) {
+  --nav-indentation-guide-color: color-mix(in srgb, var(--folder-accent, var(--text-muted)) 20%, var(--background-modifier-border));
+}
+
+.tree-item-children .nav-folder:has(.nav-folder-title[data-path]) .nav-file-title {
+  color: color-mix(in srgb, var(--folder-accent, var(--text-muted)) 14%, var(--text-muted));
+  --nav-item-background-hover: color-mix(in srgb, var(--folder-accent, var(--text-muted)) 8%, transparent);
+  --nav-item-background-active: color-mix(in srgb, var(--folder-accent, var(--text-accent)) 12%, transparent);
+}
+
+.tree-item-children .nav-folder:has(.nav-folder-title[data-path]) .nav-file-title.is-active {
+  color: color-mix(in srgb, var(--folder-accent, var(--text-accent)) 75%, var(--text-normal));
+}

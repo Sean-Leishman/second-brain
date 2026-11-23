@@ -27,3 +27,5 @@ Excalidraw/**.excalidraw
 Images/**/*
 
 a.out
+__pycache__/
+*.pyc

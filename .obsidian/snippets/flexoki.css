@@ -1,0 +1,143 @@
+.theme-light {
+  --background-primary: #fffcf0;
+  --background-primary-alt: #f2f0e5;
+  --background-secondary: #f2f0e5;
+  --background-secondary-alt: #e6e4d9;
+  --background-modifier-border: #dad8ce;
+  --background-modifier-border-hover: #b7b5ac;
+  --background-modifier-border-focus: #879a39;
+  --background-modifier-form-field: #fffcf0;
+  --background-modifier-cover: rgba(16, 15, 15, 0.55);
+
+  --text-normal: #100f0f;
+  --text-muted: #6f6e69;
+  --text-faint: #878580;
+  --text-on-accent: #fffcf0;
+  --text-accent: #af3029;
+  --text-accent-hover: #bc5215;
+  --text-selection: rgba(206, 193, 131, 0.45);
+  --text-highlight-bg: #f5e8b8;
+
+  --color-accent: #af3029;
+  --color-accent-1: #bc5215;
+  --color-accent-2: #d14d41;
+  --interactive-normal: #f2f0e5;
+  --interactive-hover: #e6e4d9;
+  --interactive-accent: #af3029;
+  --interactive-accent-hover: #bc5215;
+
+  --link-color: #af3029;
+  --link-color-hover: #bc5215;
+  --link-external-color: #205ea6;
+  --link-external-color-hover: #4385be;
+  --link-unresolved-color: #8b7ec8;
+  --link-unresolved-opacity: 1;
+
+  --h1-color: #100f0f;
+  --h2-color: #100f0f;
+  --h3-color: #100f0f;
+  --h4-color: #100f0f;
+  --h5-color: #100f0f;
+  --h6-color: #100f0f;
+  --code-normal: #100f0f;
+  --code-background: #f2f0e5;
+  --code-comment: #6f6e69;
+  --code-function: #205ea6;
+  --code-keyword: #8b7ec8;
+  --code-property: #24837b;
+  --code-string: #66800b;
+  --code-value: #ad8301;
+
+  --tag-color: #205ea6;
+  --tag-color-hover: #205ea6;
+  --tag-background: #e1eceb;
+  --tag-background-hover: #d3e6e2;
+  --blockquote-border-color: #d14d41;
+  --hr-color: #dad8ce;
+  --list-marker-color: #6f6e69;
+  --checkbox-color: #af3029;
+  --checkbox-border-color: #878580;
+
+  --nav-item-color: #6f6e69;
+  --nav-item-color-hover: #100f0f;
+  --nav-item-color-active: #af3029;
+  --nav-item-background-hover: #e6e4d9;
+  --nav-item-background-active: #eadfcf;
+  --ribbon-background: #f2f0e5;
+  --status-bar-background: #f2f0e5;
+  --status-bar-text-color: #6f6e69;
+  --modal-background: #fffcf0;
+  --modal-border-color: #dad8ce;
+}
+
+.theme-dark {
+  --background-primary: #100f0f;
+  --background-primary-alt: #1c1b1a;
+  --background-secondary: #1c1b1a;
+  --background-secondary-alt: #282726;
+  --background-modifier-border: #403e3c;
+  --background-modifier-border-hover: #575653;
+  --background-modifier-border-focus: #879a39;
+  --background-modifier-form-field: #1c1b1a;
+  --background-modifier-cover: rgba(16, 15, 15, 0.75);
+
+  --text-normal: #cecdc3;
+  --text-muted: #878580;
+  --text-faint: #575653;
+  --text-on-accent: #100f0f;
+  --text-accent: #d14d41;
+  --text-accent-hover: #da702c;
+  --text-selection: rgba(87, 86, 83, 0.65);
+  --text-highlight-bg: #5b4f26;
+
+  --color-accent: #d14d41;
+  --color-accent-1: #da702c;
+  --color-accent-2: #af3029;
+  --interactive-normal: #1c1b1a;
+  --interactive-hover: #282726;
+  --interactive-accent: #d14d41;
+  --interactive-accent-hover: #da702c;
+
+  --link-color: #d14d41;
+  --link-color-hover: #da702c;
+  --link-external-color: #4385be;
+  --link-external-color-hover: #66b3c5;
+  --link-unresolved-color: #8b7ec8;
+  --link-unresolved-opacity: 1;
+
+  --h1-color: #cecdc3;
+  --h2-color: #cecdc3;
+  --h3-color: #cecdc3;
+  --h4-color: #cecdc3;
+  --h5-color: #cecdc3;
+  --h6-color: #cecdc3;
+  --code-normal: #cecdc3;
+  --code-background: #1c1b1a;
+  --code-comment: #878580;
+  --code-function: #4385be;
+  --code-keyword: #8b7ec8;
+  --code-property: #3aa99f;
+  --code-string: #879a39;
+  --code-value: #d0a215;
+
+  --tag-color: #66b3c5;
+  --tag-color-hover: #66b3c5;
+  --tag-background: #24343b;
+  --tag-background-hover: #2d4247;
+  --blockquote-border-color: #d14d41;
+  --hr-color: #403e3c;
+  --list-marker-color: #878580;
+  --checkbox-color: #d14d41;
+  --checkbox-border-color: #575653;
+
+  --nav-item-color: #878580;
+  --nav-item-color-hover: #cecdc3;
+  --nav-item-color-active: #d14d41;
+  --nav-item-background-hover: #282726;
+  --nav-item-background-active: #342825;
+  --ribbon-background: #1c1b1a;
+  --status-bar-background: #1c1b1a;
+  --status-bar-text-color: #878580;
+  --modal-background: #1c1b1a;
+  --modal-border-color: #403e3c;
+}
